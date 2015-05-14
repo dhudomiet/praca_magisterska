@@ -1,0 +1,10 @@
+1. Wstęp
+2. Sprzętowe architektury heterogeniczne
+3. Zjawisko kradzieży w obliczeniach równoległych
+	3.1 Idea
+	3.2 Istniejące rozwiązania
+4. Zastosowane obliczenia wieloskalowe
+5. Szczegóły implementacji
+6. Uzyskane wyniki
+7. Podsumowanie
+8. Literatura
