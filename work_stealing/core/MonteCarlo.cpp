@@ -37,8 +37,9 @@ void MonteCarlo::calculate_energy() {
 	}
 }
 
-int* MonteCarlo::cal_energy(int idx_i, int idx_j,
+void MonteCarlo::cal_energy(int idx_i, int idx_j, int * point,
 		Cell (*space_of_cells)[WIDTH]) {
+	srand(time(NULL));
 	if (idx_i == 0 && idx_j == 0) {
 		int tab[3];
 		int k = 0;
@@ -50,19 +51,26 @@ int* MonteCarlo::cal_energy(int idx_i, int idx_j,
 				k++;
 			}
 		}
-		srand(time(NULL));
-		int id = tab[rand() % 3];
+
 		int energy = 0;
+		int id = -1;
 		for (int i = 0; i < 3; i++) {
-			if (tab[i] == id) {
-				energy++;
+			id = tab[i];
+			if (id != space_of_cells[idx_i][idx_j].get_id()) {
+				for (int j = 0; j < 3; j++) {
+					if (tab[j] != id) {
+						energy++;
+
+					}
+				}
+				point[0] = id;
+				point[1] = energy;
+				return;
 			}
 		}
-		int data[2];
-		data[0] = id;
-		data[1] = energy;
-		int *point = data;
-		return point;
+		point[0] = -1;
+		point[1] = energy;
+
 	} else if (idx_i == 0 && idx_j == WIDTH - 1) {
 		int tab[3];
 		int k = 0;
@@ -74,19 +82,23 @@ int* MonteCarlo::cal_energy(int idx_i, int idx_j,
 				k++;
 			}
 		}
-		srand(time(NULL));
-		int id = tab[rand() % 3];
 		int energy = 0;
+		int id = -1;
 		for (int i = 0; i < 3; i++) {
-			if (tab[i] == id) {
-				energy++;
+			id = tab[i];
+			if (id != space_of_cells[idx_i][idx_j].get_id()) {
+				for (int i = 0; i < 3; i++) {
+					if (tab[i] != id) {
+						energy++;
+					}
+				}
+				point[0] = id;
+				point[1] = energy;
+				return;
 			}
 		}
-		int data[2];
-		data[0] = id;
-		data[1] = energy;
-		int *point = data;
-		return point;
+		point[0] = -1;
+		point[1] = energy;
 	} else if (idx_i == HEIGHT - 1 && idx_j == 0) {
 		int tab[3];
 		int k = 0;
@@ -98,20 +110,23 @@ int* MonteCarlo::cal_energy(int idx_i, int idx_j,
 				k++;
 			}
 		}
-		srand(time(NULL));
-		int id = tab[rand() % 3];
 		int energy = 0;
+		int id = -1;
 		for (int i = 0; i < 3; i++) {
-			if (tab[i] == id) {
-				energy++;
+			id = tab[i];
+			if (id != space_of_cells[idx_i][idx_j].get_id()) {
+				for (int i = 0; i < 3; i++) {
+					if (tab[i] != id) {
+						energy++;
+					}
+				}
+				point[0] = id;
+				point[1] = energy;
+				return;
 			}
 		}
-		int data[2];
-		data[0] = id;
-		data[1] = energy;
-		int *point = data;
-		return point;
-		return point;
+		point[0] = -1;
+		point[1] = energy;
 	} else if (idx_i == HEIGHT - 1 && idx_j == WIDTH - 1) {
 		int tab[3];
 		int k = 0;
@@ -123,19 +138,23 @@ int* MonteCarlo::cal_energy(int idx_i, int idx_j,
 				k++;
 			}
 		}
-		srand(time(NULL));
-		int id = tab[rand() % 3];
 		int energy = 0;
+		int id = -1;
 		for (int i = 0; i < 3; i++) {
-			if (tab[i] == id) {
-				energy++;
+			id = tab[i];
+			if (id != space_of_cells[idx_i][idx_j].get_id()) {
+				for (int i = 0; i < 3; i++) {
+					if (tab[i] != id) {
+						energy++;
+					}
+				}
+				point[0] = id;
+				point[1] = energy;
+				return;
 			}
 		}
-		int data[2];
-		data[0] = id;
-		data[1] = energy;
-		int *point = data;
-		return point;
+		point[0] = -1;
+		point[1] = energy;
 	} else if (idx_i > 0 && idx_i < HEIGHT - 1 && idx_j == 0) {
 		int tab[5];
 		int k = 0;
@@ -147,19 +166,23 @@ int* MonteCarlo::cal_energy(int idx_i, int idx_j,
 				k++;
 			}
 		}
-		srand(time(NULL));
-		int id = tab[rand() % 5];
 		int energy = 0;
+		int id = -1;
 		for (int i = 0; i < 5; i++) {
-			if (tab[i] == id) {
-				energy++;
+			id = tab[i];
+			if (id != space_of_cells[idx_i][idx_j].get_id()) {
+				for (int i = 0; i < 5; i++) {
+					if (tab[i] != id) {
+						energy++;
+					}
+				}
+				point[0] = id;
+				point[1] = energy;
+				return;
 			}
 		}
-		int data[2];
-		data[0] = id;
-		data[1] = energy;
-		int *point = data;
-		return point;
+		point[0] = -1;
+		point[1] = energy;
 	} else if (idx_i > 0 && idx_i < HEIGHT - 1 && idx_j == WIDTH - 1) {
 		int tab[5];
 		int k = 0;
@@ -171,19 +194,23 @@ int* MonteCarlo::cal_energy(int idx_i, int idx_j,
 				k++;
 			}
 		}
-		srand(time(NULL));
-		int id = tab[rand() % 5];
 		int energy = 0;
+		int id = -1;
 		for (int i = 0; i < 5; i++) {
-			if (tab[i] == id) {
-				energy++;
+			id = tab[i];
+			if (id != space_of_cells[idx_i][idx_j].get_id()) {
+				for (int i = 0; i < 5; i++) {
+					if (tab[i] != id) {
+						energy++;
+					}
+				}
+				point[0] = id;
+				point[1] = energy;
+				return;
 			}
 		}
-		int data[2];
-		data[0] = id;
-		data[1] = energy;
-		int *point = data;
-		return point;
+		point[0] = -1;
+		point[1] = energy;
 	} else if (idx_j > 0 && idx_j < WIDTH - 1 && idx_i == 0) {
 		int tab[5];
 		int k = 0;
@@ -195,19 +222,23 @@ int* MonteCarlo::cal_energy(int idx_i, int idx_j,
 				k++;
 			}
 		}
-		srand(time(NULL));
-		int id = tab[rand() % 5];
 		int energy = 0;
+		int id = -1;
 		for (int i = 0; i < 5; i++) {
-			if (tab[i] == id) {
-				energy++;
+			id = tab[i];
+			if (id != space_of_cells[idx_i][idx_j].get_id()) {
+				for (int i = 0; i < 5; i++) {
+					if (tab[i] != id) {
+						energy++;
+					}
+				}
+				point[0] = id;
+				point[1] = energy;
+				return;
 			}
 		}
-		int data[2];
-		data[0] = id;
-		data[1] = energy;
-		int *point = data;
-		return point;
+		point[0] = -1;
+		point[1] = energy;
 	} else if (idx_j > 0 && idx_j < WIDTH - 1 && idx_i == HEIGHT - 1) {
 		int tab[5];
 		int k = 0;
@@ -219,19 +250,23 @@ int* MonteCarlo::cal_energy(int idx_i, int idx_j,
 				k++;
 			}
 		}
-		srand(time(NULL));
-		int id = tab[rand() % 5];
 		int energy = 0;
+		int id = -1;
 		for (int i = 0; i < 5; i++) {
-			if (tab[i] == id) {
-				energy++;
+			id = tab[i];
+			if (id != space_of_cells[idx_i][idx_j].get_id()) {
+				for (int i = 0; i < 5; i++) {
+					if (tab[i] != id) {
+						energy++;
+					}
+				}
+				point[0] = id;
+				point[1] = energy;
+				return;
 			}
 		}
-		int data[2];
-		data[0] = id;
-		data[1] = energy;
-		int *point = data;
-		return point;
+		point[0] = -1;
+		point[1] = energy;
 	} else {
 		int tab[8];
 		int k = 0;
@@ -243,25 +278,30 @@ int* MonteCarlo::cal_energy(int idx_i, int idx_j,
 				k++;
 			}
 		}
-		srand(time(NULL));
-		int id = tab[rand() % 8];
 		int energy = 0;
+		int id = -1;
 		for (int i = 0; i < 8; i++) {
-			if (tab[i] == id) {
-				energy++;
+			id = tab[i];
+			if (id != space_of_cells[idx_i][idx_j].get_id()) {
+				for (int i = 0; i < 8; i++) {
+					if (tab[i] != id) {
+						energy++;
+					}
+				}
+				point[0] = id;
+				point[1] = energy;
+				return;
 			}
 		}
-		int data[2];
-		data[0] = id;
-		data[1] = energy;
-		int *point = data;
-		return point;
+		point[0] = -1;
+		point[1] = energy;
 	}
 
 }
 
 int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 		Cell (*space_of_cells)[WIDTH]) {
+	srand(time(NULL));
 	if (idx_i == 0 && idx_j == 0) {
 		int tab[3];
 		int k = 0;
@@ -273,10 +313,9 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 				k++;
 			}
 		}
-		srand(time(NULL));
 		int energy = 0;
 		for (int i = 0; i < 3; i++) {
-			if (tab[i] == id) {
+			if (tab[i] != id) {
 				energy++;
 			}
 		}
@@ -292,10 +331,9 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 				k++;
 			}
 		}
-		srand(time(NULL));
 		int energy = 0;
 		for (int i = 0; i < 3; i++) {
-			if (tab[i] == id) {
+			if (tab[i] != id) {
 				energy++;
 			}
 		}
@@ -311,10 +349,9 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 				k++;
 			}
 		}
-		srand(time(NULL));
 		int energy = 0;
 		for (int i = 0; i < 3; i++) {
-			if (tab[i] == id) {
+			if (tab[i] != id) {
 				energy++;
 			}
 		}
@@ -330,10 +367,9 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 				k++;
 			}
 		}
-		srand(time(NULL));
 		int energy = 0;
 		for (int i = 0; i < 3; i++) {
-			if (tab[i] == id) {
+			if (tab[i] != id) {
 				energy++;
 			}
 		}
@@ -349,10 +385,9 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 				k++;
 			}
 		}
-		srand(time(NULL));
 		int energy = 0;
 		for (int i = 0; i < 5; i++) {
-			if (tab[i] == id) {
+			if (tab[i] != id) {
 				energy++;
 			}
 		}
@@ -368,10 +403,9 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 				k++;
 			}
 		}
-		srand(time(NULL));
 		int energy = 0;
 		for (int i = 0; i < 5; i++) {
-			if (tab[i] == id) {
+			if (tab[i] != id) {
 				energy++;
 			}
 		}
@@ -387,10 +421,9 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 				k++;
 			}
 		}
-		srand(time(NULL));
 		int energy = 0;
 		for (int i = 0; i < 5; i++) {
-			if (tab[i] == id) {
+			if (tab[i] != id) {
 				energy++;
 			}
 		}
@@ -406,10 +439,9 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 				k++;
 			}
 		}
-		srand(time(NULL));
 		int energy = 0;
 		for (int i = 0; i < 5; i++) {
-			if (tab[i] == id) {
+			if (tab[i] != id) {
 				energy++;
 			}
 		}
@@ -425,10 +457,9 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 				k++;
 			}
 		}
-		srand(time(NULL));
 		int energy = 0;
 		for (int i = 0; i < 8; i++) {
-			if (tab[i] == id) {
+			if (tab[i] != id) {
 				energy++;
 			}
 		}
@@ -440,19 +471,26 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 void MonteCarlo::monte_carlo_algorithm() {
 	initialize_ids();
 	calculate_energy();
+	draw_space();
 	std::vector<Cell> listCells;
 	copy_spaces(oldstate, cells);
 	srand(time(NULL));
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 200; i++) {
 		fill_list(&listCells, cells);
 		while (listCells.size() > 0) {
 			int number = rand() % listCells.size();
 			Cell data = listCells.at(number);
 			listCells.erase(listCells.begin() + number - 1);
-			int* cal = cal_energy(data.get_idx_i(), data.get_idx_j(),oldstate);
-			int delta = cal[1]-data.get_energy();
+			int tab[2];
+			int *p = tab;
+			cal_energy(data.get_idx_i(), data.get_idx_j(), p, oldstate);
+			if (p[0] == -1) {
+				continue;
+			}
+			int delta = p[1] - data.get_energy();
 			if (delta <= 0) {
-				cells[data.get_idx_i()][data.get_idx_j()].set_id(cal[0]);
+				cells[data.get_idx_i()][data.get_idx_j()].set_id(p[0]);
+				cells[data.get_idx_i()][data.get_idx_j()].set_energy(p[1]);
 			}
 		}
 		copy_spaces(oldstate, cells);
@@ -591,6 +629,15 @@ void MonteCarlo::draw_space() {
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
 			std::cout << cells[i][j].get_id() << " ";
+		}
+		std::cout << std::endl;
+	}
+}
+
+void MonteCarlo::draw_energy() {
+	for (int i = 0; i < HEIGHT; i++) {
+		for (int j = 0; j < WIDTH; j++) {
+			std::cout << cells[i][j].get_energy() << " ";
 		}
 		std::cout << std::endl;
 	}

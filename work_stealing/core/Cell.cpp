@@ -12,14 +12,16 @@ Cell::Cell() {
 	idx_i = 0;
 	id = 0;
 	flag = false;
+	energy = 0;
 
 }
 
-Cell::Cell(int id, int idx_i, int idx_j, bool flag) {
+Cell::Cell(int id, int idx_i, int idx_j, bool flag, int energy) {
 	this->id = id;
 	this->idx_i = idx_i;
 	this->idx_j = idx_j;
 	this->flag = flag;
+	this->energy = energy;
 }
 
 Cell::~Cell() {
@@ -58,7 +60,7 @@ void Cell::set_flag(bool flag) {
 	this->flag = flag;
 }
 
-Cell Cell::operator =(Cell cell) {
+Cell& Cell::operator =(const Cell &cell) {
 	this->id = cell.id;
 	this->idx_i = cell.idx_i;
 	this->idx_j = cell.idx_j;

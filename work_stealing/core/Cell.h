@@ -11,7 +11,7 @@
 class Cell {
 public:
 	Cell();
-	Cell(int id, int idx_i, int idx_j, bool flag);
+	Cell(int id, int idx_i, int idx_j, bool flag, int energy);
 	virtual ~Cell();
 	int get_id();
 	void set_id(int id);
@@ -21,7 +21,7 @@ public:
 	void set_idx_j(int idx_j);
 	bool get_flag();
 	void set_flag(bool flag);
-	Cell operator=(Cell cell);
+	Cell& operator=(const Cell &cell);
 	int get_energy();
 	void set_energy(int energy);
 private:
