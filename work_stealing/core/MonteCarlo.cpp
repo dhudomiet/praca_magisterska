@@ -8,7 +8,7 @@
 #include "MonteCarlo.h"
 
 MonteCarlo::MonteCarlo() {
-	// TODO Auto-generated constructor stub
+	initialize_ids();
 
 }
 
@@ -20,7 +20,7 @@ void MonteCarlo::initialize_ids() {
 	srand(time(NULL));
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
-			cells[i][j].set_id(rand() % NUMBER_OF_IDS);
+			cells[i][j].set_id(rand() % NUMBER_OF_IDS+1);
 			cells[i][j].set_idx_i(i);
 			cells[i][j].set_idx_j(j);
 			cells[i][j].set_flag(true);
@@ -37,8 +37,7 @@ void MonteCarlo::calculate_energy() {
 	}
 }
 
-void MonteCarlo::cal_energy(int idx_i, int idx_j, int * point,
-		Cell (*space_of_cells)[WIDTH]) {
+void MonteCarlo::cal_energy(int idx_i, int idx_j,int * point, Cell (&space_of_cells)[HEIGHT][WIDTH]) {
 	srand(time(NULL));
 	if (idx_i == 0 && idx_j == 0) {
 		int tab[3];
@@ -299,8 +298,7 @@ void MonteCarlo::cal_energy(int idx_i, int idx_j, int * point,
 
 }
 
-int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
-		Cell (*space_of_cells)[WIDTH]) {
+int MonteCarlo::cal_energy(int idx_i, int idx_j,int id, Cell (&space_of_cells)[HEIGHT][WIDTH]) {
 	srand(time(NULL));
 	if (idx_i == 0 && idx_j == 0) {
 		int tab[3];
@@ -469,18 +467,21 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 }
 
 void MonteCarlo::monte_carlo_algorithm() {
-	initialize_ids();
 	calculate_energy();
-	draw_space();
 	std::vector<Cell> listCells;
 	copy_spaces(oldstate, cells);
 	srand(time(NULL));
-	for (int i = 0; i < 200; i++) {
+	for (int i = 0; i < 100; i++) {
 		fill_list(&listCells, cells);
-		while (listCells.size() > 0) {
-			int number = rand() % listCells.size();
+		int size = listCells.size();
+		while (size>0) {
+			int number = rand() % size;
 			Cell data = listCells.at(number);
-			listCells.erase(listCells.begin() + number - 1);
+			int er = number -1;
+			if(er < 0){
+				er = 0;
+			}
+			listCells.erase(listCells.begin()+(er));
 			int tab[2];
 			int *p = tab;
 			cal_energy(data.get_idx_i(), data.get_idx_j(), p, oldstate);
@@ -492,16 +493,18 @@ void MonteCarlo::monte_carlo_algorithm() {
 				cells[data.get_idx_i()][data.get_idx_j()].set_id(p[0]);
 				cells[data.get_idx_i()][data.get_idx_j()].set_energy(p[1]);
 			}
+			size = listCells.size();
 		}
 		copy_spaces(oldstate, cells);
-		draw_space();
+		//draw_space();
 		std::cout << std::endl;
 		std::cout << std::endl;
 	}
+	draw_space();
 
 }
 
-void MonteCarlo::fill_list(std::vector<Cell> *vect, Cell (*space)[WIDTH]) {
+void MonteCarlo::fill_list(std::vector<Cell> *vect, Cell (&space)[HEIGHT][WIDTH]) {
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
 			if (is_on_the_board(i, j, space)) {
@@ -512,7 +515,7 @@ void MonteCarlo::fill_list(std::vector<Cell> *vect, Cell (*space)[WIDTH]) {
 }
 
 bool MonteCarlo::is_on_the_board(int idx_i, int idx_j,
-		Cell (*space_of_cells)[WIDTH]) {
+		Cell (&space_of_cells)[HEIGHT][WIDTH]) {
 	if (idx_i == 0 && idx_j == 0) {
 		for (int i = idx_i; i < idx_i + 2; i++) {
 			for (int j = idx_j; j < idx_j + 2; j++) {
@@ -643,11 +646,27 @@ void MonteCarlo::draw_energy() {
 	}
 }
 
-void MonteCarlo::copy_spaces(Cell (*space)[WIDTH],
-		Cell (*source_space)[WIDTH]) {
+void MonteCarlo::copy_spaces(Cell (&space)[HEIGHT][WIDTH], Cell (&source_space)[HEIGHT][WIDTH]) {
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
 			space[i][j] = source_space[i][j];
+		}
+	}
+
+}
+
+MonteCarlo::MonteCarlo(Cell cells[HEIGHT][WIDTH]) {
+	for(int i=0;i<HEIGHT;i++){
+		for(int j=0;j<WIDTH;j++){
+			this->cells[i][j] = cells[i][j];
+		}
+	}
+}
+
+void MonteCarlo::set_cells(Cell (&cells)[HEIGHT][WIDTH]) {
+	for(int i=0;i<HEIGHT;i++){
+		for(int j=0;j<WIDTH;j++){
+			cells[i][j] = this->cells[i][j];
 		}
 	}
 

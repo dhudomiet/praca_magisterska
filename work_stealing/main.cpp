@@ -1,8 +1,9 @@
 #include "core/MonteCarlo.h"
+#include "core/Recrystalization.h"
 
 int main(){
-	MonteCarlo mc;
-	mc.monte_carlo_algorithm();
+	Recrystalization r;
+	r.recrystalization_algorithm();
 	return 0;
 
 

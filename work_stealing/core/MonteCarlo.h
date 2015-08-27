@@ -14,28 +14,27 @@
 #include <stdlib.h>
 #include <time.h>
 #include "Cell.h"
-
-#define HEIGHT 20
-#define WIDTH 20
-#define NUMBER_OF_IDS 50
+#include "constans.h"
 
 class MonteCarlo {
 public:
 	MonteCarlo();
+	MonteCarlo(Cell cells[HEIGHT][WIDTH]);
 	virtual ~MonteCarlo();
 	void initialize_ids();
-	void cal_energy(int idx_i, int idx_j,int * point, Cell (*space_of_cells)[WIDTH]);
-	int cal_energy(int idx_i, int idx_j,int id, Cell (*space_of_cells)[WIDTH]);
+	void cal_energy(int idx_i, int idx_j,int * point, Cell (&space_of_cells)[HEIGHT][WIDTH]);
+	int cal_energy(int idx_i, int idx_j,int id, Cell (&space_of_cells)[HEIGHT][WIDTH]);
 	void monte_carlo_algorithm();
-	void fill_list(std::vector<Cell> *vect, Cell (*space)[WIDTH]);
-	bool is_on_the_board(int idx_i, int idx_j, Cell (*space_of_cells)[WIDTH]);
-	void copy_spaces(Cell (*space)[WIDTH], Cell (*source_space)[WIDTH]);
+	void fill_list(std::vector<Cell> *vect, Cell (&space)[HEIGHT][WIDTH]);
+	bool is_on_the_board(int idx_i, int idx_j, Cell (&space_of_cells)[HEIGHT][WIDTH]);
+	void copy_spaces(Cell (&space)[HEIGHT][WIDTH], Cell (&source_space)[HEIGHT][WIDTH]);
 	void calculate_energy();
 	void draw_space();
 	void draw_energy();
+	void set_cells(Cell (&cells)[HEIGHT][WIDTH]);
 private:
 	Cell cells[HEIGHT][WIDTH];
 	Cell oldstate[HEIGHT][WIDTH];
-};;
+};
 
 #endif /* MONTECARLO_H_ */
