@@ -13,8 +13,7 @@ MonteCarlo::MonteCarlo() {
 }
 
 MonteCarlo::~MonteCarlo() {
-	//delete[][] MonteCarlo::cells.local();
-	//delete[][] MonteCarlo::oldstate.local();
+	
 }
 
 void MonteCarlo::initialize_ids() {
@@ -36,7 +35,6 @@ void MonteCarlo::initialize_ids() {
 	stop = clock();
 	float t = (float)stop - (float)start;
 	std::cout<<"time: "<<t<<std::endl;
-	//draw_space();
 }
 
 void MonteCarlo::calculate_energy() {
@@ -479,7 +477,7 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j, int id,
 
 void MonteCarlo::monte_carlo_algorithm() {
 	clock_t start, stop;
-	//logg("start execution monteCarlo algorithm...");
+	logg("start execution monteCarlo algorithm...");
 	start = clock();
 	calculate_energy();
 	std::vector<cell> listCells;
@@ -510,12 +508,11 @@ void MonteCarlo::monte_carlo_algorithm() {
 			size = listCells.size();
 		}
 		copy_spaces(oldstate, cells);
-		//draw_space();
 	}
 	stop = clock();
 	float time = (float) stop - (float) start;
 	loggTime("time execution of monteCarlo algorithm: ", time);
-	draw_space();
+	//draw_space();
 
 }
 

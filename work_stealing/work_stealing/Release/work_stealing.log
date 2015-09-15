@@ -1,21 +1,25 @@
-﻿Build started 2015-09-15 00:34:46.
+﻿Build started 2015-09-15 22:22:18.
      1>Project "C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MonteCarlo.cpp main.cpp
+         MonteCarlo.cpp
+     1>MonteCarlo.cpp(16): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>MonteCarlo.cpp(53): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>MonteCarlo.cpp(147): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>MonteCarlo.cpp(239): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
          main.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Release\work_stealing.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Release\work_stealing.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Release\work_stealing.lib" /MACHINE:X86 /SAFESEH Release\Cell.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Release\multiscape_modeling_work_stealing.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Release\multiscape_modeling_work_stealing.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Release\multiscape_modeling_work_stealing.lib" /MACHINE:X86 /SAFESEH Release\Cell.obj
          Release\GrainGrow.obj
          Release\main.obj
          Release\MonteCarlo.obj
          Release\Recrystalization.obj
          Generating code
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\montecarlo.cpp(208): warning C4700: uninitialized local variable 'i' used
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\montecarlo.cpp(341): warning C4700: uninitialized local variable 'i' used
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\montecarlo.cpp(383): warning C4700: uninitialized local variable 'start' used
          Finished generating code
-         work_stealing.vcxproj -> C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Release\work_stealing.exe
+         work_stealing.vcxproj -> C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Release\multiscape_modeling_work_stealing.exe
      1>Done Building Project "C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.21
+Time Elapsed 00:00:01.93

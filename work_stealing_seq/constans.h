@@ -1,6 +1,6 @@
-#define HEIGHT 20
-#define WIDTH 20
-#define NUMBER_OF_IDS 50
+#define HEIGHT 200
+#define WIDTH 200
+#define NUMBER_OF_IDS 100
 #define H 4
 #define ENERGY_ON_THE_BOARD 10
 #define ENERGY_ON_GRAIN 7

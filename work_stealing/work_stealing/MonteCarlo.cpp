@@ -17,39 +17,31 @@ void MonteCarlo::initialize_ids() {
 	logg("initialize Ids");
 	clock_t start, stop;
 	start = clock();
-	for(int i=0;i<WIDTH;i++){
+	for(int i=0;i<HEIGHT;i++){
 		cell* tab = new cell[WIDTH];
-		parallel_for(0,HEIGHT,[&](int j) {
+		cell* tabOld = new cell[WIDTH];
+		parallel_for(0,WIDTH,[&](int j) {
 			tab[j].id=rand() % NUMBER_OF_IDS+1;
 			tab[j].idx_i=i;
 			tab[j].idx_j=j;
-			tab[j].flag=true;
+			tab[j].flag=false;
 
 		});	
 		cells.push_back(tab);
-		oldstate.push_back(tab);
+		oldstate.push_back(tabOld);
 	}
 
 
 	stop = clock();
 	float t = (float)stop - (float)start;
-	std::cout<<"time: "<<t<<std::endl;
-	draw_space();
-	std::cout<<std::endl;
-	std::cout<<std::endl;
-	/*for(int i=0;i<HEIGHT;i++){
-		for(int j=0;j<WIDTH;j++){
-			std::cout<<i<<" "<<j<<" "<<cells.at(i)[j].idx_i<<" "<<cells.at(i)[j].idx_j<<std::endl;
-		}
-	}*/
-
+	//draw_space();
 }
 
 void MonteCarlo::calculate_energy() {
 	clock_t start, stop;
 	start = clock();
-	concurrency::parallel_for(0,HEIGHT,[&](int i) {
-		concurrency::parallel_for(0,HEIGHT,[&](int j) {
+	parallel_for(0,HEIGHT,[&](int i){
+		parallel_for(0,WIDTH,[&](int j){
 			cells.at(i)[j].energy=cal_energy(i, j, cells.at(i)[j].id, cells);
 		});
 	});
@@ -116,17 +108,23 @@ void MonteCarlo::cal_energy(int idx_i, int idx_j,int * point, concurrent_vector<
 		j = idx_j-1;
 		endJ = idx_j+2;
 	}
-	for (i ; i < endI; i++) {
-		for (j ; j < endJ; j++) {
-			if (i == idx_i && j == idx_j)
+	int m = j;
+	while(i < endI) {
+		while(j < endJ) {
+			if (i == idx_i && j == idx_j){
+				j++;
 				continue;
+			}
 			tab[k] = space_of_cells.at(i)[j].id;
 			k++;
+			j++;
 		}
+		i++;
+		j=m;
 	}
 	int energy = 0;
 	int id = -1;
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < k; i++) {
 		id = tab[i];
 		if (id != space_of_cells.at(idx_i)[idx_j].id) {
 			for (int i = 0; i < k; i++) {
@@ -142,8 +140,7 @@ void MonteCarlo::cal_energy(int idx_i, int idx_j,int * point, concurrent_vector<
 	point[0] = -1;
 	point[1] = energy;
 	delete[] tab;
-
-
+	return;
 }
 
 int MonteCarlo::cal_energy(int idx_i, int idx_j,int id, concurrent_vector<cell*> space_of_cells) {
@@ -205,20 +202,28 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j,int id, concurrent_vector<cell*>
 		j = idx_j-1;
 		endJ = idx_j+2;
 	}
-	for (int i ; i < endI ; i++) {
-		for (j ; j < endJ; j++) {
-			if (i == idx_i && j == idx_j)
+	int m = j;
+	while(i < endI) {
+		while(j < endJ) {
+			if (i == idx_i && j == idx_j){
+				j++;
 				continue;
+			}
 			tab[k] = space_of_cells.at(i)[j].id;
 			k++;
+			j++;
 		}
+		i++;
+		j=m;
 	}
 	int energy = 0;
-	for (int i = 0; i < 8; i++) {
+	for (i = 0; i < k; i++) {
 		if (tab[i] != id) {
 			energy++;
 		}
+
 	}
+	delete[] tab;
 	return energy;
 
 
@@ -229,54 +234,45 @@ void MonteCarlo::monte_carlo_algorithm() {
 	clock_t start,stop;
 	start=clock();
 	calculate_energy();
-	std::vector<cell> listCells;
+	concurrent_vector<cell> listCells;
 	copy_spaces(oldstate, cells);
 	srand(time(NULL));
 	for (int i = 0; i < 100; i++) {
 		fill_list(&listCells, cells);
 		int size = listCells.size();
-		while (size>0) {
-			int number = rand() % size;
-			cell data = listCells.at(number);
-			int er = number -1;
-			if(er < 0){
-				er = 0;
-			}
-			listCells.erase(listCells.begin()+er);
+		parallel_for(0,size,[&](int j) {
+			cell data = listCells.at(j);
 			int tab[2];
 			int *p = tab;
 			cal_energy(data.idx_i, data.idx_j, p, oldstate);
-			if (p[0] == -1) {
-				continue;
+			if (p[0] != -1) {
+				int delta = p[1] - data.energy;
+				if (delta <= 0) {
+					cells.at(data.idx_i)[data.idx_j].id=p[0];
+					cells.at(data.idx_i)[data.idx_j].energy=p[1];
+				}
+
 			}
-			int delta = p[1] - data.energy;
-			if (delta <= 0) {
-				cells.at(data.idx_i)[data.idx_j].id=p[0];
-				cells.at(data.idx_i)[data.idx_j].energy=p[1];
-			}
-			size = listCells.size();
-		}
+		});
+		listCells.clear();
 		copy_spaces(oldstate, cells);
 	}
 	stop=clock();
 	float time = (float)stop - (float)start;
-	loggTime("time execution monteCarlo algorithm: ",time);
-	draw_space();
+	loggTime("time execution montecarlo algorithm: ",time);
+	//draw_space();
 
 }
 
-void MonteCarlo::fill_list(std::vector<cell> *vect, concurrent_vector<cell*> space) {
-	concurrency::concurrent_vector<cell> vct;
-	concurrency::parallel_for(0,HEIGHT,[&](int i) {
-		concurrency::parallel_for(0,HEIGHT,[&](int j) {
+void MonteCarlo::fill_list(concurrent_vector<cell> *vect, concurrent_vector<cell*> space) {
+	parallel_for(0,HEIGHT,[&](int i) {
+		parallel_for(0,WIDTH,[&](int j) {
 			if (is_on_the_board(i, j, space)) {
-				vct.push_back(space.at(i)[j]);
+				vect->push_back(space.at(i)[j]);
 			}
 		});
 	});
-	for(unsigned int i=0;i<vct.size();i++){
-		vect->push_back(vct.at(i));
-	}
+
 }
 
 bool MonteCarlo::is_on_the_board(int idx_i, int idx_j, concurrent_vector<cell*> space_of_cells) {
@@ -338,14 +334,22 @@ bool MonteCarlo::is_on_the_board(int idx_i, int idx_j, concurrent_vector<cell*> 
 		endJ = idx_j+2;
 	}
 
-	for (int i ; i < endI ; i++) {
-		for (j ; j < endJ; j++) {
-			if (i == idx_i && j == idx_j)
+	int m = j;
+	while(i < endI) {
+		while(j < endJ) {
+			if (i == idx_i && j == idx_j){
+				j++;
 				continue;
+			}
 			if (space_of_cells.at(i)[j].id != space_of_cells.at(idx_i)[idx_j].id) {
 				return true;
 			}
+			tab[k] = space_of_cells.at(i)[j].id;
+			k++;
+			j++;
 		}
+		i++;
+		j=m;
 	}
 	return false;
 
@@ -367,11 +371,11 @@ void MonteCarlo::copy_spaces(concurrent_vector<cell*> space, concurrent_vector<c
 	clock_t start, stop;
 	for(int i = 0;i< HEIGHT;i++){
 		parallel_for(0,WIDTH, [&](int j){
-			source_space.at(i)[j].id = source_space.at(i)[j].id; 
-			source_space.at(i)[j].idx_i = source_space.at(i)[j].idx_i;
-			source_space.at(i)[j].idx_j = source_space.at(i)[j].idx_j;
-			source_space.at(i)[j].flag = source_space.at(i)[j].flag;
-			source_space.at(i)[j].energy = source_space.at(i)[j].energy;
+			space.at(i)[j].id = source_space.at(i)[j].id; 
+			space.at(i)[j].idx_i = source_space.at(i)[j].idx_i;
+			space.at(i)[j].idx_j = source_space.at(i)[j].idx_j;
+			space.at(i)[j].flag = source_space.at(i)[j].flag;
+			space.at(i)[j].energy = source_space.at(i)[j].energy;
 		});
 	}
 
