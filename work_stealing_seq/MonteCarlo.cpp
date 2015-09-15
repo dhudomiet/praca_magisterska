@@ -17,11 +17,10 @@ MonteCarlo::~MonteCarlo() {
 }
 
 void MonteCarlo::initialize_ids() {
+	logg("initialize ids...");
 	srand(time(NULL));
 	oldstate = new cell*[HEIGHT];
 	cells = new cell*[HEIGHT];
-	clock_t start, stop;
-	start = clock();
 	for (int i = 0; i < HEIGHT; i++) {
 		oldstate[i] = new cell[WIDTH];
 		cells[i] = new cell[WIDTH];
@@ -32,9 +31,6 @@ void MonteCarlo::initialize_ids() {
 			cells[i][j].flag = true;
 		}
 	}
-	stop = clock();
-	float t = (float)stop - (float)start;
-	std::cout<<"time: "<<t<<std::endl;
 }
 
 void MonteCarlo::calculate_energy() {
@@ -512,7 +508,7 @@ void MonteCarlo::monte_carlo_algorithm() {
 	stop = clock();
 	float time = (float) stop - (float) start;
 	loggTime("time execution of monteCarlo algorithm: ", time);
-	//draw_space();
+	draw_space();
 
 }
 
@@ -679,7 +675,11 @@ MonteCarlo::MonteCarlo(cell cells[HEIGHT][WIDTH]) {
 void MonteCarlo::set_cells(cell** cells) {
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
-			cells[i][j] = this->cells[i][j];
+			cells[i][j].id = this->cells[i][j].id;
+			cells[i][j].idx_i = this->cells[i][j].idx_i;
+			cells[i][j].idx_j = this->cells[i][j].idx_j;
+			cells[i][j].energy = this->cells[i][j].energy;
+			cells[i][j].flag = this->cells[i][j].flag;
 		}
 	}
 

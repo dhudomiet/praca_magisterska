@@ -1,9 +1,9 @@
-#define HEIGHT 200
-#define WIDTH 200
-#define NUMBER_OF_IDS 100
+#define HEIGHT 10
+#define WIDTH 10
+#define NUMBER_OF_IDS 9
 #define H 4
 #define ENERGY_ON_THE_BOARD 10
 #define ENERGY_ON_GRAIN 7
-#define RECRYSTALIZATION_GRAINS 100
+#define RECRYSTALIZATION_GRAINS 5
 #define logg(a) std::cout<<a<<std::endl;
 #define loggTime(a,b) std::cout<<a<<b<<std::endl;

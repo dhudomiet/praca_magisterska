@@ -25,15 +25,14 @@ public:
 	void recrystalization_algorithm();
 	void initializeSpace();
 	void initializeEnergy();
-	bool is_on_the_board(int idx_i, int idx_j, Cell (&space_of_cells)[HEIGHT][WIDTH]);
-	void cal_energy(int idx_i, int idx_j,int * point, Cell (&space_of_cells)[HEIGHT][WIDTH]);
-	void fill_no_recrystalization_list(std::vector<Cell> *list);
+	void cal_energy(int idx_i, int idx_j,int * point, cell** space_of_cells);
+	void fill_no_recrystalization_list(std::vector<cell> *list);
 	void randomRecGrains();
 	void draw_data();
 private:
-	Cell cells[HEIGHT][WIDTH];
+	cell** cells;
 	MonteCarlo mc;
-	std::vector<Cell> recrystalizationList;
+	std::vector<cell> recrystalizationList;
 
 };
 

@@ -42,14 +42,14 @@ void MonteCarlo::calculate_energy() {
 	start = clock();
 	parallel_for(0,HEIGHT,[&](int i){
 		parallel_for(0,WIDTH,[&](int j){
-			cells.at(i)[j].energy=cal_energy(i, j, cells.at(i)[j].id, cells);
+			cells.at(i)[j].energy=cal_energy(i, j, cells.at(i)[j].id, &cells);
 		});
 	});
 	stop = clock();
 	//loggTime("time of execution function calculate_energy: ",(float)stop-(float)start);
 }
 
-void MonteCarlo::cal_energy(int idx_i, int idx_j,int * point, concurrent_vector<cell*> space_of_cells) {
+void MonteCarlo::cal_energy(int idx_i, int idx_j,int * point, concurrent_vector<cell*> *space_of_cells) {
 	srand(time(NULL));
 	int *tab;
 	int k=0,i=0,j=0,endI=0,endJ=0;
@@ -115,7 +115,7 @@ void MonteCarlo::cal_energy(int idx_i, int idx_j,int * point, concurrent_vector<
 				j++;
 				continue;
 			}
-			tab[k] = space_of_cells.at(i)[j].id;
+			tab[k] = space_of_cells->at(i)[j].id;
 			k++;
 			j++;
 		}
@@ -126,7 +126,7 @@ void MonteCarlo::cal_energy(int idx_i, int idx_j,int * point, concurrent_vector<
 	int id = -1;
 	for (int i = 0; i < k; i++) {
 		id = tab[i];
-		if (id != space_of_cells.at(idx_i)[idx_j].id) {
+		if (id != space_of_cells->at(idx_i)[idx_j].id) {
 			for (int i = 0; i < k; i++) {
 				if (tab[i] != id) {
 					energy++;
@@ -143,7 +143,7 @@ void MonteCarlo::cal_energy(int idx_i, int idx_j,int * point, concurrent_vector<
 	return;
 }
 
-int MonteCarlo::cal_energy(int idx_i, int idx_j,int id, concurrent_vector<cell*> space_of_cells) {
+int MonteCarlo::cal_energy(int idx_i, int idx_j,int id, concurrent_vector<cell*> *space_of_cells) {
 	srand(time(NULL));
 	int *tab;
 	int k=0,i=0,j=0,endI=0,endJ=0;
@@ -209,7 +209,7 @@ int MonteCarlo::cal_energy(int idx_i, int idx_j,int id, concurrent_vector<cell*>
 				j++;
 				continue;
 			}
-			tab[k] = space_of_cells.at(i)[j].id;
+			tab[k] = space_of_cells->at(i)[j].id;
 			k++;
 			j++;
 		}
@@ -244,7 +244,7 @@ void MonteCarlo::monte_carlo_algorithm() {
 			cell data = listCells.at(j);
 			int tab[2];
 			int *p = tab;
-			cal_energy(data.idx_i, data.idx_j, p, oldstate);
+			cal_energy(data.idx_i, data.idx_j, p, &oldstate);
 			if (p[0] != -1) {
 				int delta = p[1] - data.energy;
 				if (delta <= 0) {
@@ -260,14 +260,14 @@ void MonteCarlo::monte_carlo_algorithm() {
 	stop=clock();
 	float time = (float)stop - (float)start;
 	loggTime("time execution montecarlo algorithm: ",time);
-	//draw_space();
+	draw_space();
 
 }
 
 void MonteCarlo::fill_list(concurrent_vector<cell> *vect, concurrent_vector<cell*> space) {
 	parallel_for(0,HEIGHT,[&](int i) {
 		parallel_for(0,WIDTH,[&](int j) {
-			if (is_on_the_board(i, j, space)) {
+			if (is_on_the_board(i, j, &space)) {
 				vect->push_back(space.at(i)[j]);
 			}
 		});
@@ -275,7 +275,7 @@ void MonteCarlo::fill_list(concurrent_vector<cell> *vect, concurrent_vector<cell
 
 }
 
-bool MonteCarlo::is_on_the_board(int idx_i, int idx_j, concurrent_vector<cell*> space_of_cells) {
+bool MonteCarlo::is_on_the_board(int idx_i, int idx_j, concurrent_vector<cell*> *space_of_cells) {
 	int *tab;
 	int k=0,i=0,j=0,endI=0,endJ=0;
 	if (idx_i == 0 && idx_j == 0) {
@@ -341,10 +341,10 @@ bool MonteCarlo::is_on_the_board(int idx_i, int idx_j, concurrent_vector<cell*> 
 				j++;
 				continue;
 			}
-			if (space_of_cells.at(i)[j].id != space_of_cells.at(idx_i)[idx_j].id) {
+			if (space_of_cells->at(i)[j].id != space_of_cells->at(idx_i)[idx_j].id) {
 				return true;
 			}
-			tab[k] = space_of_cells.at(i)[j].id;
+			tab[k] = space_of_cells->at(i)[j].id;
 			k++;
 			j++;
 		}
@@ -392,12 +392,16 @@ MonteCarlo::MonteCarlo(concurrent_vector<cell*> cells) {
 	});
 }
 
-void MonteCarlo::set_cells(concurrent_vector<cell*> cells) {
-	for(int i=0;i<HEIGHT;i++){
-		for(int j=0;j<WIDTH;j++){
-			cells.at(i)[j] = this->cells.at(i)[j];
-		}
-	}
+void MonteCarlo::set_cells(concurrent_vector<cell*> *cells) {
+	parallel_for(0,HEIGHT,[&](int i){
+		parallel_for(0,WIDTH,[&](int j){
+			cells->at(i)[j].id = this->cells.at(i)[j].id;
+			cells->at(i)[j].idx_i = this->cells.at(i)[j].idx_i;
+			cells->at(i)[j].idx_j = this->cells.at(i)[j].idx_j;
+			cells->at(i)[j].energy = this->cells.at(i)[j].energy;
+			cells->at(i)[j].flag = this->cells.at(i)[j].flag;
+		});
+	});
 
 }
 

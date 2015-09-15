@@ -12,39 +12,34 @@ Recrystalization::Recrystalization() {
 }
 
 void Recrystalization::recrystalization_algorithm() {
-	std::vector<Cell> noRecrystalizationCells;
+	std::vector<cell> noRecrystalizationCells;
+	clock_t start,stop;
+	logg("start of recrystalization algorithm...");
+	start = clock();
 	randomRecGrains();
 	fill_no_recrystalization_list(&noRecrystalizationCells);
 	for (int i = 0; i < 1000; i++) {
 		srand(time(NULL));
 		while (noRecrystalizationCells.size() > 0) {
 			int number = rand() % noRecrystalizationCells.size();
-			Cell grain = noRecrystalizationCells.at(number);
+			cell grain = noRecrystalizationCells.at(number);
 			int era = number - 1;
 			if(era<0){
 				era = 0;
 			}
-			noRecrystalizationCells.erase(
-					noRecrystalizationCells.begin() + era);
+			noRecrystalizationCells.erase(noRecrystalizationCells.begin() + era);
 			int tab[2];
-			std::cout << grain.get_idx_i() << " " << grain.get_idx_j() << " ";
 			int *p = tab;
-			cal_energy(grain.get_idx_i(), grain.get_idx_j(), p, cells);
-			std::cout << "id and energy: " << " " << p[0] << " " << p[1]
-					<< std::endl;
+			cal_energy(grain.idx_i, grain.idx_j, p, cells);
 			if (p[0] < 0) {
 				int energy = 0;
 				energy = p[1] + H;
-				int energyRec =
-						cells[grain.get_idx_i()][grain.get_idx_j()].get_energy()
-								+ energy;
-				energy =
-						cells[grain.get_idx_i()][grain.get_idx_j()].get_energy();
+				int energyRec = cells[grain.idx_i][grain.idx_j].energy + energy;
+				energy = cells[grain.idx_i][grain.idx_j].energy;
 				if (energyRec > energy) {
-					cells[grain.get_idx_i()][grain.get_idx_j()].set_energy(0);
-					cells[grain.get_idx_i()][grain.get_idx_j()].set_id(p[0]);
-					recrystalizationList.push_back(
-							cells[grain.get_idx_i()][grain.get_idx_j()]);
+					cells[grain.idx_i][grain.idx_j].energy = 0;
+					cells[grain.idx_i][grain.idx_j].id = p[0];
+					recrystalizationList.push_back(cells[grain.idx_i][grain.idx_j]);
 				}
 
 			}
@@ -54,156 +49,47 @@ void Recrystalization::recrystalization_algorithm() {
 			break;
 		}
 	}
-	//MonteCarlo mc(this->cells);
-	//mc.monte_carlo_algorithm();
-
-	//draw_data();
+	stop = clock();
+	float t = (float)stop - (float)start;
+	loggTime("time of execution recrystalization: ",t);
+	draw_data();
 }
 
 void Recrystalization::draw_data() {
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
-			std::cout << cells[i][j].get_id() << " ";
+			std::cout << cells[i][j].id<< " ";
 		}
 		std::cout << std::endl;
 	}
 }
 
 void Recrystalization::initializeSpace() {
-	//mc.monte_carlo_algorithm();
-	//mc.set_cells(cells);
-	//initializeEnergy();
+	cells = new cell*[HEIGHT];
+	for(int i=0;i<HEIGHT;i++){
+		cells[i] = new cell[WIDTH];
+		
+	}
+	mc.monte_carlo_algorithm();
+	mc.set_cells(cells);
+	initializeEnergy();
 
 }
 
 void Recrystalization::initializeEnergy() {
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
-			if (is_on_the_board(i, j, cells)) {
-				cells[i][j].set_energy(ENERGY_ON_THE_BOARD);
+			if (mc.is_on_the_board(i, j, cells)) {
+				cells[i][j].energy=ENERGY_ON_THE_BOARD;
 			} else {
-				cells[i][j].set_energy(ENERGY_ON_GRAIN);
+				cells[i][j].energy=ENERGY_ON_GRAIN;
 			}
 		}
-		std::cout << std::endl;
 	}
-}
-
-bool Recrystalization::is_on_the_board(int idx_i, int idx_j,
-		Cell (&space_of_cells)[HEIGHT][WIDTH]) {
-	if (idx_i == 0 && idx_j == 0) {
-		for (int i = idx_i; i < idx_i + 2; i++) {
-			for (int j = idx_j; j < idx_j + 2; j++) {
-				if (i == 0 && j == 0)
-					continue;
-				if (space_of_cells[i][j].get_id()
-						!= space_of_cells[idx_i][idx_j].get_id()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	} else if (idx_i == 0 && idx_j == WIDTH - 1) {
-		for (int i = idx_i; i < idx_i + 2; i++) {
-			for (int j = idx_j - 1; j < idx_j + 1; j++) {
-				if (i == idx_i && j == idx_j)
-					continue;
-				if (space_of_cells[i][j].get_id()
-						!= space_of_cells[idx_i][idx_j].get_id()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	} else if (idx_i == HEIGHT - 1 && idx_j == 0) {
-		for (int i = idx_i - 1; i < idx_i + 1; i++) {
-			for (int j = idx_j; j < idx_j + 2; j++) {
-				if (i == idx_i && j == idx_j)
-					continue;
-				if (space_of_cells[i][j].get_id()
-						!= space_of_cells[idx_i][idx_j].get_id()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	} else if (idx_i == HEIGHT - 1 && idx_j == WIDTH - 1) {
-		for (int i = idx_i - 1; i < idx_i + 1; i++) {
-			for (int j = idx_j - 1; j < idx_j + 1; j++) {
-				if (i == idx_i && j == idx_j)
-					continue;
-				if (space_of_cells[i][j].get_id()
-						!= space_of_cells[idx_i][idx_j].get_id()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	} else if (idx_i > 0 && idx_i < HEIGHT - 1 && idx_j == 0) {
-		for (int i = idx_i - 1; i < idx_i + 2; i++) {
-			for (int j = idx_j; j < idx_j + 2; j++) {
-				if (i == idx_i && j == idx_j)
-					continue;
-				if (space_of_cells[i][j].get_id()
-						!= space_of_cells[idx_i][idx_j].get_id()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	} else if (idx_i > 0 && idx_i < HEIGHT - 1 && idx_j == WIDTH - 1) {
-		for (int i = idx_i - 1; i < idx_i + 2; i++) {
-			for (int j = idx_j - 1; j < idx_j + 1; j++) {
-				if (i == idx_i && j == idx_j)
-					continue;
-				if (space_of_cells[i][j].get_id()
-						!= space_of_cells[idx_i][idx_j].get_id()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	} else if (idx_j > 0 && idx_j < WIDTH - 1 && idx_i == 0) {
-		for (int i = idx_i; i < idx_i + 2; i++) {
-			for (int j = idx_j - 1; j < idx_j + 2; j++) {
-				if (i == idx_i && j == idx_j)
-					continue;
-				if (space_of_cells[i][j].get_id()
-						!= space_of_cells[idx_i][idx_j].get_id()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	} else if (idx_j > 0 && idx_j < WIDTH - 1 && idx_i == HEIGHT - 1) {
-		for (int i = idx_i - 1; i < idx_i + 1; i++) {
-			for (int j = idx_j - 1; j < idx_j + 2; j++) {
-				if (i == idx_i && j == idx_j)
-					continue;
-				if (space_of_cells[i][j].get_id()
-						!= space_of_cells[idx_i][idx_j].get_id()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	} else {
-		for (int i = idx_i - 1; i < idx_i + 2; i++) {
-			for (int j = idx_j - 1; j < idx_j + 2; j++) {
-				if (i == idx_i && j == idx_j)
-					continue;
-				if (space_of_cells[i][j].get_id()
-						!= space_of_cells[idx_i][idx_j].get_id()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-}
+} 
 
 void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
-		Cell (&space_of_cells)[HEIGHT][WIDTH]) {
+		cell** space_of_cells) {
 	srand(time(NULL));
 	if (idx_i == 0 && idx_j == 0) {
 		int tab[3];
@@ -212,7 +98,7 @@ void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
 			for (int j = idx_j; j < idx_j + 2; j++) {
 				if (i == 0 && j == 0)
 					continue;
-				tab[k] = space_of_cells[i][j].get_id();
+				tab[k] = space_of_cells[i][j].id;
 				k++;
 			}
 		}
@@ -273,7 +159,7 @@ void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
 			for (int j = idx_j - 1; j < idx_j + 1; j++) {
 				if (i == idx_i && j == idx_j)
 					continue;
-				tab[k] = space_of_cells[i][j].get_id();
+				tab[k] = space_of_cells[i][j].id;
 				k++;
 			}
 		}
@@ -333,7 +219,7 @@ void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
 			for (int j = idx_j; j < idx_j + 2; j++) {
 				if (i == idx_i && j == idx_j)
 					continue;
-				tab[k] = space_of_cells[i][j].get_id();
+				tab[k] = space_of_cells[i][j].id;
 				k++;
 			}
 		}
@@ -393,7 +279,7 @@ void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
 			for (int j = idx_j - 1; j < idx_j + 1; j++) {
 				if (i == idx_i && j == idx_j)
 					continue;
-				tab[k] = space_of_cells[i][j].get_id();
+				tab[k] = space_of_cells[i][j].id;
 				k++;
 			}
 		}
@@ -453,7 +339,7 @@ void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
 			for (int j = idx_j; j < idx_j + 2; j++) {
 				if (i == idx_i && j == idx_j)
 					continue;
-				tab[k] = space_of_cells[i][j].get_id();
+				tab[k] = space_of_cells[i][j].id;
 				k++;
 			}
 		}
@@ -513,7 +399,7 @@ void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
 			for (int j = idx_j - 1; j < idx_j + 1; j++) {
 				if (i == idx_i && j == idx_j)
 					continue;
-				tab[k] = space_of_cells[i][j].get_id();
+				tab[k] = space_of_cells[i][j].id;
 				k++;
 			}
 		}
@@ -573,7 +459,7 @@ void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
 			for (int j = idx_j - 1; j < idx_j + 2; j++) {
 				if (i == idx_i && j == idx_j)
 					continue;
-				tab[k] = space_of_cells[i][j].get_id();
+				tab[k] = space_of_cells[i][j].id;
 				k++;
 			}
 		}
@@ -633,7 +519,7 @@ void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
 			for (int j = idx_j - 1; j < idx_j + 2; j++) {
 				if (i == idx_i && j == idx_j)
 					continue;
-				tab[k] = space_of_cells[i][j].get_id();
+				tab[k] = space_of_cells[i][j].id;
 				k++;
 			}
 		}
@@ -694,7 +580,7 @@ void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
 			for (int j = idx_j - 1; j < idx_j + 2; j++) {
 				if (i == idx_i && j == idx_j)
 					continue;
-				tab[k] = space_of_cells[i][j].get_id();
+				tab[k] = space_of_cells[i][j].id;
 				k++;
 			}
 		}
@@ -751,10 +637,10 @@ void Recrystalization::cal_energy(int idx_i, int idx_j, int * point,
 
 }
 
-void Recrystalization::fill_no_recrystalization_list(std::vector<Cell>* list) {
+void Recrystalization::fill_no_recrystalization_list(std::vector<cell>* list) {
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
-			if (cells[i][j].get_energy() > 0) {
+			if (cells[i][j].energy > 0) {
 				list->push_back(cells[i][j]);
 			}
 		}
@@ -766,9 +652,9 @@ void Recrystalization::randomRecGrains() {
 	for (int i = 1; i <= RECRYSTALIZATION_GRAINS; i++) {
 		int x = rand() % HEIGHT;
 		int y = rand() % WIDTH;
-		if (is_on_the_board(x, y, cells)) {
-			cells[x][y].set_id(-i);
-			cells[x][y].set_energy(0);
+		if (mc.is_on_the_board(x, y, cells)) {
+			cells[x][y].id=-i;
+			cells[x][y].energy=0;
 			recrystalizationList.push_back(cells[x][y]);
 		} else {
 			i--;

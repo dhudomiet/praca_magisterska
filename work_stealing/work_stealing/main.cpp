@@ -1,5 +1,5 @@
 #include "MonteCarlo.h"
-//#include "Recrystalization.h"
+#include "Recrystalization.h"
 #include <stdio.h>
 #include <iostream>
 #include <concurrent_vector.h>
@@ -10,8 +10,10 @@
 using namespace std;
 
 int main(){
-	MonteCarlo mc;
-	mc.monte_carlo_algorithm();
+	//MonteCarlo mc;
+	//mc.monte_carlo_algorithm();
+	Recrystalization rec;
+	rec.recrystalization_algorithm();
 	//std::cout<<std::endl;
 	//std::cout<<std::endl;
 	//mc.copy_spaces(mc.oldstate,mc.cells);
