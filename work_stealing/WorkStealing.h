@@ -19,6 +19,8 @@ public:
 	void addTask(Task* task);
 	Task* getIndex(int idx);
 	static WorkStealing* getCore(int idx);
+	static int getCoreSize();
+	static void clear();
 private:
 	static vector<WorkStealing*> cores;
 	static boost::mutex mut;

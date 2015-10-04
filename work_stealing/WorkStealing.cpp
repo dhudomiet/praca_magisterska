@@ -15,9 +15,7 @@ WorkStealing::WorkStealing(void)
 
 WorkStealing::~WorkStealing(void)
 {
-	mut.lock();
-	cores.erase(cores.begin()+id);
-	mut.unlock();
+	cout<<"destruct"<<endl;
 }
 
 void WorkStealing::steal(){
@@ -34,6 +32,7 @@ void WorkStealing::steal(){
 }
 
 void WorkStealing::execute(){
+	flag = false;
 	while(flag == false){
 		if(tasks.size()>0){
 			Task* t = getFirstTask();
@@ -102,4 +101,14 @@ Task* WorkStealing::getIndex(int idx){
 
 WorkStealing* WorkStealing::getCore(int idx){
 	return cores.at(idx);
+}
+
+int WorkStealing::getCoreSize(){
+	return cores.size();
+}
+
+void WorkStealing::clear(){
+	while(cores.size()){
+		cores.erase(cores.begin());
+	}
 }

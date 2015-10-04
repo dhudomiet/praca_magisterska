@@ -12,7 +12,7 @@
 #define logg(a) if(FLAG == true)std::cout<<a<<std::endl;
 #define loggErr(a,b) if(FLAG == true)std::cout<<a<<" error nr: "<<b<<std::endl;
 #define loggTime(a,b) if(FLAG ==true)std::cout<<a<<" "<<b<<std::endl;
-
+#define CORES boost::thread::hardware_concurrency()
 typedef struct {
 	int id;
 	int idx_i;

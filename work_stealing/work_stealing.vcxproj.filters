@@ -39,6 +39,9 @@
     <ClInclude Include="WorkStealing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CalculateEnergy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp">
@@ -63,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorkStealing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CalculateEnergy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

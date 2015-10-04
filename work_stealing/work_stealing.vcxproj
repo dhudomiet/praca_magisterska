@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CalculateEnergy.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="constans.h" />
     <ClInclude Include="GrainGrow.h" />
@@ -21,6 +22,7 @@
     <ClInclude Include="WorkStealing.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CalculateEnergy.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="GrainGrow.cpp" />
     <ClCompile Include="InitializeIds.cpp" />
