@@ -1,0 +1,26 @@
+﻿Build started 2015-09-23 19:41:54.
+     1>Project "C:\Users\Ideapad\documents\visual studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\boost_1_58_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Recrystalization.cpp Task.cpp main.cpp
+         main.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\constans.h(19): error C2371: 'cell' : redefinition; different basic types
+                 c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\constans.h(19) : see declaration of 'cell'
+                 c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\constans.h(19) : see declaration of 'cell'
+         Task.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\task.cpp(20): error C2276: '&' : illegal operation on bound member function expression
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\task.cpp(20): error C3867: 'InitializeIDsTask::start': function call missing argument list; use '&InitializeIDsTask::start' to create a pointer to member
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\task.cpp(20): error C2661: 'boost::thread::thread' : no overloaded function takes 5 arguments
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\task.cpp(24): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\task.cpp(26): error C2082: redefinition of formal parameter 'stop'
+         Recrystalization.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\constans.h(19): error C2371: 'cell' : redefinition; different basic types
+                 c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\constans.h(19) : see declaration of 'cell'
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(21): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(92): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(227): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         Generating Code...
+     1>Done Building Project "C:\Users\Ideapad\documents\visual studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:06.11

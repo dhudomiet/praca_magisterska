@@ -1,9 +1,15 @@
-#include "core/MonteCarlo.h"
-#include "core/Recrystalization.h"
+#include <iostream>
+#include <vector>
+#include "constans.h"
+#include <boost\thread.hpp>
+#include "MonteCarlo.h"
+
+
+using namespace std;
 
 int main(){
-	Recrystalization r;
-	r.recrystalization_algorithm();
+	MonteCarlo mc;
+	system("pause");
 	return 0;
 
 
