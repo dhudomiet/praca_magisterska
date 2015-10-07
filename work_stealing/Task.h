@@ -13,7 +13,8 @@ public:
 	~Task(void);
 	virtual void start();
 	void join();
-	void execute();
+	virtual void execute();
+	void detach();
 protected:
 	boost::thread th;
 };

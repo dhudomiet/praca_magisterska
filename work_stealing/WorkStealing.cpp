@@ -1,21 +1,23 @@
 #include "WorkStealing.h"
 
-boost::mutex WorkStealing::mut;
 bool WorkStealing::flag = false;
 vector<WorkStealing*> WorkStealing::cores;
 
 WorkStealing::WorkStealing(void)
 {
-	mut.lock();
+	boost::lock_guard<boost::mutex> lock(mut);
 	cores.push_back(this);
 	id = cores.size()-1;
-	mut.unlock();
 }
 
 
 WorkStealing::~WorkStealing(void)
 {
-	cout<<"destruct"<<endl;
+	th->detach();
+}
+
+void WorkStealing::detach(){
+	th->detach();
 }
 
 void WorkStealing::steal(){
@@ -26,15 +28,19 @@ void WorkStealing::steal(){
 	}
 	WorkStealing* work = cores.at(r);
 	//cout<<"core id: "<<id<<" steal data from core id: "<<work->getID()<<endl;
-	if(work->getTaskSize()>0){
+	if(work->getTaskSize()>1){
 		tasks.push_back(work->getLastTask());
+		Task* t = getFirstTask();
+		//cout<<"core id: "<<id<<" execute task..."<<endl;
+		t->start();
+		t->join();
 	}
 }
 
 void WorkStealing::execute(){
-	flag = false;
+	flag = (flag == true)? false : false;
 	while(flag == false){
-		if(tasks.size()>0){
+		if(getTaskSize()>0){
 			Task* t = getFirstTask();
 			//cout<<"core id: "<<id<<" execute task..."<<endl;
 			t->start();
@@ -54,35 +60,37 @@ void WorkStealing::execute(){
 }
 
 boost::thread* WorkStealing::start(){
-	th = boost::thread(&WorkStealing::execute,this);
-	return &th;
+	th =new boost::thread(&WorkStealing::execute,this);
+	return th;
 }
 
 void WorkStealing::join(){
-	th.join();
+	th->join();
 }
 
 Task* WorkStealing::getLastTask(){
-	mut.lock();
+	boost::lock_guard<boost::mutex> lock(mut);
+	//cout<<"core id: "<<id<<" lock"<<endl;
 	Task* task = tasks.at(tasks.size()-1);
 	tasks.pop_back();
-	mut.unlock();
+	//cout<<"core id: "<<id<<" unlock"<<endl;
 	return task;
 }
 
 Task* WorkStealing::getFirstTask(){
-	mut.lock();
+	boost::lock_guard<boost::mutex> lock(mut);
+	//cout<<"core id: "<<id<<" lock"<<endl;
 	Task* task = tasks.at(0);
 	tasks.pop_front();
-	mut.unlock();
+	//cout<<"core id: "<<id<<" unlock"<<endl;
 	return task;
 }
 
 int WorkStealing::getTaskSize(){
-	mut.lock();
-	int szs = tasks.size();
-	mut.unlock();
-	return szs;
+	boost::lock_guard<boost::mutex> lock(mut);
+	//cout<<"core id: "<<id<<" lock"<<endl;
+	//cout<<"core id: "<<id<<" unlock"<<endl;
+	return tasks.size();
 }
 
 int WorkStealing::getID(){
@@ -90,9 +98,9 @@ int WorkStealing::getID(){
 }
 
 void WorkStealing::addTask(Task* task){
-	mut.lock();
+	boost::lock_guard<boost::mutex> lock(mut);
 	tasks.push_back(task);
-	mut.unlock();
+	return;
 }
 
 Task* WorkStealing::getIndex(int idx){
@@ -111,4 +119,8 @@ void WorkStealing::clear(){
 	while(cores.size()){
 		cores.erase(cores.begin());
 	}
+}
+
+void WorkStealing::stop(){
+	flag = true;
 }

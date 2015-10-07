@@ -1,26 +1,38 @@
-﻿Build started 2015-09-23 19:41:54.
-     1>Project "C:\Users\Ideapad\documents\visual studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015-10-07 17:54:07.
+     1>Project "C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\boost_1_58_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Recrystalization.cpp Task.cpp main.cpp
-         main.cpp
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\constans.h(19): error C2371: 'cell' : redefinition; different basic types
-                 c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\constans.h(19) : see declaration of 'cell'
-                 c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\constans.h(19) : see declaration of 'cell'
-         Task.cpp
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\task.cpp(20): error C2276: '&' : illegal operation on bound member function expression
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\task.cpp(20): error C3867: 'InitializeIDsTask::start': function call missing argument list; use '&InitializeIDsTask::start' to create a pointer to member
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\task.cpp(20): error C2661: 'boost::thread::thread' : no overloaded function takes 5 arguments
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\task.cpp(24): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\task.cpp(26): error C2082: redefinition of formal parameter 'stop'
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\boost_1_58_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Recrystalization.cpp
          Recrystalization.cpp
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\constans.h(19): error C2371: 'cell' : redefinition; different basic types
-                 c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\constans.h(19) : see declaration of 'cell'
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(21): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(92): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(227): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-         Generating Code...
-     1>Done Building Project "C:\Users\Ideapad\documents\visual studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" (Build target(s)) -- FAILED.
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(84): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(111): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2761): warning C4996: 'std::_Fill_n': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2747) : see declaration of 'std::_Fill_n'
+                 c:\boost_1_58_0\boost\random\detail\polynomial.hpp(114) : see reference to function template instantiation '_OutIt std::fill_n<boost::random::detail::polynomial_ops::digit_t*,size_t,boost::random::detail::polynomial_ops::digit_t>(_OutIt,_Diff,const _Ty &)' being compiled
+                 with
+                 [
+                     _OutIt=boost::random::detail::polynomial_ops::digit_t *,
+                     _Diff=size_t,
+                     _Ty=boost::random::detail::polynomial_ops::digit_t
+                 ]
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\boost_1_58_0\stage\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.lib" /MACHINE:X86 Debug\CalculateEnergy.obj
+         Debug\Cell.obj
+         Debug\CopySpaces.obj
+         Debug\ExecuteList.obj
+         Debug\ExecuteRec.obj
+         Debug\FillList.obj
+         Debug\FillNoRecList.obj
+         Debug\GrainGrow.obj
+         Debug\InitializeEnergy.obj
+         Debug\InitializeIds.obj
+         Debug\main.obj
+         Debug\MonteCarlo.obj
+         Debug\Recrystalization.obj
+         Debug\Task.obj
+         Debug\WorkStealing.obj
+         work_stealing.vcxproj -> C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.exe
+     1>Done Building Project "C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:06.11
+Time Elapsed 00:00:04.71

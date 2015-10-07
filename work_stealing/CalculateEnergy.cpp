@@ -3,6 +3,7 @@
 
 CalculateEnergy::CalculateEnergy(void) : Task()
 {
+
 }
 
 CalculateEnergy::CalculateEnergy(int begin, int end, cell** cells) : Task(){
@@ -16,12 +17,10 @@ CalculateEnergy::~CalculateEnergy(void)
 }
 
 void CalculateEnergy::start(){
-	th = boost::thread(&CalculateEnergy::execute,this,begin,end,cells);
+	th = boost::thread(&CalculateEnergy::execute,this);
 }
 
-void CalculateEnergy::execute(int begin, int end, cell** cells){
-	end = (end>HEIGHT)? HEIGHT : end;
-	cout<<"calculate energy..."<<endl;
+void CalculateEnergy::execute(){
 	for(int i=begin;i<end;i++){
 		for(int j=0;j<WIDTH;j++){
 			cells[i][j].energy = cal_energy(i,j,cells[i][j].id,cells);

@@ -8,323 +8,131 @@
 #include "MonteCarlo.h"
 
 MonteCarlo::MonteCarlo() {
+	cores = new WorkStealing[CORES];
 	initialize_ids();
-	calculate_energy();
-	//initialize_ids();
+	//calculate_energy();
 }
 
+MonteCarlo::~MonteCarlo(){
+	//delete cores;
+}
 void MonteCarlo::initialize_ids() {
-	logg("initialize Ids");
-	clock_t start, stop;
 	int sum = 0;
 	int step = HEIGHT/CORES;
+	clock_t start,stop;
 	boost::thread_group group;
 	cells = new cell*[HEIGHT];
-	for(int i=0;i<CORES;i++){
-		WorkStealing* ws = new WorkStealing();
+	oldstate = new cell*[HEIGHT];
+	for(int i=0;i<HEIGHT;i++){
+		oldstate[i] = new cell[WIDTH];
 	}
+	start = clock();
 	while(sum<HEIGHT){
 		InitializeIds* init = new InitializeIds(sum,sum+step,cells);
 		WorkStealing::getCore(0)->addTask(init);
 		sum+=step;
 	}
-	start = clock();
 	for(int i= CORES-1;i>=0;i--){
 		group.add_thread(WorkStealing::getCore(i)->start());
 	}
 	group.join_all();
 	stop = clock();
-	float t = (float)stop - (float)start;
-	WorkStealing::clear();
-	draw_space();
+	//cout<<"time execution: "<<(float)(stop-start)<<endl;
+	//delete init;
+	//draw_space();
 }
 
 void MonteCarlo::calculate_energy() {
-	clock_t start, stop;
 	int sum = 0;
 	int step = HEIGHT/CORES;
 	boost::thread_group group;
-	cout<<"calculate energy"<<endl;
-	for(unsigned i = 0;i<CORES;i++){
-		WorkStealing* wo = new WorkStealing();
-	}
+	int i=0;
 	while(sum<HEIGHT){
 		CalculateEnergy* init = new CalculateEnergy(sum,sum+step,cells);
 		WorkStealing::getCore(0)->addTask(init);
-
 		sum+=step;
 	}
-	start = clock();
 	for(int i=CORES-1;i>=0;i--){
 		group.add_thread(WorkStealing::getCore(i)->start());
 	}
 	group.join_all();
-	stop = clock();
-	WorkStealing::clear();
-	float t = (float)stop - (float)start;
-	//loggTime("time of execution function calculate_energy: ",(float)stop-(float)start);
-	draw_energy();
+	//draw_energy();
 }
-/*
-void MonteCarlo::cal_energy(int idx_i, int idx_j,int * point, concurrent_vector<cell*> *space_of_cells) {
-	srand(time(NULL));
-	int *tab;
-	int k=0,i=0,j=0,endI=0,endJ=0;
-	if (idx_i == 0 && idx_j == 0) {
-		tab = new int[3];
-		i = idx_i;
-		endI = idx_i+2;
-		j = idx_j;
-		endJ = idx_j+2;
-	} else if (idx_i == 0 && idx_j == WIDTH - 1) {
-		tab = new int[3];
-		i = idx_i;
-		endI = idx_i+2;
-		j = idx_j-1;
-		endJ = idx_j+1;
-	} else if (idx_i == HEIGHT - 1 && idx_j == 0) {
-		tab = new int[3];
-		i = idx_i-1;
-		endI = idx_i+1;
-		j = idx_j;
-		endJ = idx_j+2;
-	} else if (idx_i == HEIGHT - 1 && idx_j == WIDTH - 1) {
-		tab = new int[3];
-		i = idx_i-1;
-		endI = idx_i+1;
-		j = idx_j-1;
-		endJ = idx_j+1;
-	} else if (idx_i > 0 && idx_i < HEIGHT - 1 && idx_j == 0) {
-		tab = new int[5];
-		i = idx_i-1;
-		endI = idx_i+2;
-		j = idx_j;
-		endJ = idx_j+2;
-	} else if (idx_i > 0 && idx_i < HEIGHT - 1 && idx_j == WIDTH - 1) {
-		tab = new int[5];
-		i = idx_i-1;
-		endI = idx_i+2;
-		j = idx_j-1;
-		endJ = idx_j+1;
-	} else if (idx_j > 0 && idx_j < WIDTH - 1 && idx_i == 0) {
-		tab = new int[5];
-		i = idx_i;
-		endI = idx_i+2;
-		j = idx_j-1;
-		endJ = idx_j+2;
-	} else if (idx_j > 0 && idx_j < WIDTH - 1 && idx_i == HEIGHT - 1) {
-		tab = new int[5];
-		i = idx_i-1;
-		endI = idx_i+1;
-		j = idx_j-1;
-		endJ = idx_j+2;
-	} else {
-		tab = new int[8];
-		i = idx_i-1;
-		endI = idx_i+2;
-		j = idx_j-1;
-		endJ = idx_j+2;
+
+void MonteCarlo::initializeCores(){
+	for(unsigned i = 0;i<CORES;i++){
+		WorkStealing* wo = new WorkStealing();
 	}
-	int m = j;
-	while(i < endI) {
-		while(j < endJ) {
-			if (i == idx_i && j == idx_j){
-				j++;
-				continue;
-			}
-			tab[k] = space_of_cells->at(i)[j].id;
-			k++;
-			j++;
-		}
-		i++;
-		j=m;
-	}
-	int energy = 0;
-	int id = -1;
-	for (int i = 0; i < k; i++) {
-		id = tab[i];
-		if (id != space_of_cells->at(idx_i)[idx_j].id) {
-			for (int i = 0; i < k; i++) {
-				if (tab[i] != id) {
-					energy++;
-				}
-			}
-			point[0] = id;
-			point[1] = energy;
-			return;
-		}
-	}
-	point[0] = -1;
-	point[1] = energy;
-	delete[] tab;
-	return;
 }
+
+
 
 void MonteCarlo::monte_carlo_algorithm() {
 	logg("start monteCarlo algorithm...");
 	clock_t start,stop;
 	start=clock();
 	calculate_energy();
-	concurrent_vector<cell> listCells;
+	vector<cell> listCells;
 	copy_spaces(oldstate, cells);
 	srand(time(NULL));
 	for (int i = 0; i < 100; i++) {
 		fill_list(&listCells, cells);
-		int size = listCells.size();
-		parallel_for(0,size,[&](int j) {
-			cell data = listCells.at(j);
-			int tab[2];
-			int *p = tab;
-			cal_energy(data.idx_i, data.idx_j, p, &oldstate);
-			if (p[0] != -1) {
-				int delta = p[1] - data.energy;
-				if (delta <= 0) {
-					cells.at(data.idx_i)[data.idx_j].id=p[0];
-					cells.at(data.idx_i)[data.idx_j].energy=p[1];
-				}
-
-			}
-		});
+		//cout<<listCells.size()<<endl;
+		executeList(&listCells,cells,oldstate);
 		listCells.clear();
 		copy_spaces(oldstate, cells);
 	}
 	stop=clock();
 	float time = (float)stop - (float)start;
 	loggTime("time execution montecarlo algorithm: ",time);
-	draw_space();
+	//draw_space();
 
 }
 
-void MonteCarlo::fill_list(concurrent_vector<cell> *vect, concurrent_vector<cell*> space) {
-	parallel_for(0,HEIGHT,[&](int i) {
-		parallel_for(0,WIDTH,[&](int j) {
-			if (is_on_the_board(i, j, &space)) {
-				vect->push_back(space.at(i)[j]);
-			}
-		});
-	});
-
-}
-
-bool MonteCarlo::is_on_the_board(int idx_i, int idx_j, concurrent_vector<cell*> *space_of_cells) {
-	int *tab;
-	int k=0,i=0,j=0,endI=0,endJ=0;
-	if (idx_i == 0 && idx_j == 0) {
-		tab = new int[3];
-		i = idx_i;
-		endI = idx_i+2;
-		j = idx_j;
-		endJ = idx_j+2;
-	} else if (idx_i == 0 && idx_j == WIDTH - 1) {
-		tab = new int[3];
-		i = idx_i;
-		endI = idx_i+2;
-		j = idx_j-1;
-		endJ = idx_j+1;
-	} else if (idx_i == HEIGHT - 1 && idx_j == 0) {
-		tab = new int[3];
-		i = idx_i-1;
-		endI = idx_i+1;
-		j = idx_j;
-		endJ = idx_j+2;
-	} else if (idx_i == HEIGHT - 1 && idx_j == WIDTH - 1) {
-		tab = new int[3];
-		i = idx_i-1;
-		endI = idx_i+1;
-		j = idx_j-1;
-		endJ = idx_j+1;
-	} else if (idx_i > 0 && idx_i < HEIGHT - 1 && idx_j == 0) {
-		tab = new int[5];
-		i = idx_i-1;
-		endI = idx_i+2;
-		j = idx_j;
-		endJ = idx_j+2;
-	} else if (idx_i > 0 && idx_i < HEIGHT - 1 && idx_j == WIDTH - 1) {
-		tab = new int[5];
-		i = idx_i-1;
-		endI = idx_i+2;
-		j = idx_j-1;
-		endJ = idx_j+1;
-	} else if (idx_j > 0 && idx_j < WIDTH - 1 && idx_i == 0) {
-		tab = new int[5];
-		i = idx_i;
-		endI = idx_i+2;
-		j = idx_j-1;
-		endJ = idx_j+2;
-	} else if (idx_j > 0 && idx_j < WIDTH - 1 && idx_i == HEIGHT - 1) {
-		tab = new int[5];
-		i = idx_i-1;
-		endI = idx_i+1;
-		j = idx_j-1;
-		endJ = idx_j+2;
-	} else {
-		tab = new int[8];
-		i = idx_i-1;
-		endI = idx_i+2;
-		j = idx_j-1;
-		endJ = idx_j+2;
+void MonteCarlo::executeList(vector<cell> *list, cell** cells, cell** oldstate){
+	int sum = 0;
+	int step = HEIGHT/CORES;
+	boost::thread_group group;
+	while(sum<list->size()){
+		ExecuteList* init = new ExecuteList(sum,sum+step,list,cells,oldstate);
+		WorkStealing::getCore(0)->addTask(init);
+		sum+=step;
 	}
-
-	int m = j;
-	while(i < endI) {
-		while(j < endJ) {
-			if (i == idx_i && j == idx_j){
-				j++;
-				continue;
-			}
-			if (space_of_cells->at(i)[j].id != space_of_cells->at(idx_i)[idx_j].id) {
-				return true;
-			}
-			tab[k] = space_of_cells->at(i)[j].id;
-			k++;
-			j++;
-		}
-		i++;
-		j=m;
+	for(int i=CORES-1;i>=0;i--){
+		group.add_thread(WorkStealing::getCore(i)->start());
 	}
-	return false;
-
-
+	group.join_all();
 }
 
-void MonteCarlo::copy_spaces(concurrent_vector<cell*> space, concurrent_vector<cell*> source_space) {
-	clock_t start, stop;
-	for(int i = 0;i< HEIGHT;i++){
-		parallel_for(0,WIDTH, [&](int j){
-			space.at(i)[j].id = source_space.at(i)[j].id; 
-			space.at(i)[j].idx_i = source_space.at(i)[j].idx_i;
-			space.at(i)[j].idx_j = source_space.at(i)[j].idx_j;
-			space.at(i)[j].flag = source_space.at(i)[j].flag;
-			space.at(i)[j].energy = source_space.at(i)[j].energy;
-		});
+void MonteCarlo::fill_list(vector<cell> *vect, cell** space) {
+	int sum = 0;
+	int step = HEIGHT/CORES;
+	boost::thread_group group;
+	while(sum<HEIGHT){
+		FillList* init = new FillList(sum,sum+step,vect,cells);
+		WorkStealing::getCore(0)->addTask(init);
+		sum+=step;
 	}
-
-	stop = clock();
-	float diff = (float)stop - (float)start;
-	//loggTime("time of execution copySpace function: ",diff);
+	for(int i=CORES-1;i>=0;i--){
+		group.add_thread(WorkStealing::getCore(i)->start());
+	}
+	group.join_all();
 }
 
-MonteCarlo::MonteCarlo(concurrent_vector<cell*> cells) {
-	concurrency::parallel_for(0,HEIGHT,[&](int i){
-		concurrency::parallel_for(0,WIDTH,[&](int j){
-			this->cells.at(i)[j] = cells.at(i)[j];
-		});
-	});
+void MonteCarlo::copy_spaces(cell** space, cell** source_space) {
+	int sum = 0;
+	int step = HEIGHT/CORES;
+	boost::thread_group group;
+	while(sum<HEIGHT){
+		CopySpaces* init = new CopySpaces(sum,sum+step,source_space,space);
+		WorkStealing::getCore(0)->addTask(init);
+		sum+=step;
+	}
+	for(int i=CORES-1;i>=0;i--){
+		group.add_thread(WorkStealing::getCore(i)->start());
+	}
+	group.join_all();
 }
-
-void MonteCarlo::set_cells(concurrent_vector<cell*> *cells) {
-	parallel_for(0,HEIGHT,[&](int i){
-		parallel_for(0,WIDTH,[&](int j){
-			cells->at(i)[j].id = this->cells.at(i)[j].id;
-			cells->at(i)[j].idx_i = this->cells.at(i)[j].idx_i;
-			cells->at(i)[j].idx_j = this->cells.at(i)[j].idx_j;
-			cells->at(i)[j].energy = this->cells.at(i)[j].energy;
-			cells->at(i)[j].flag = this->cells.at(i)[j].flag;
-		});
-	});
-
-}
-*/
 
 void MonteCarlo::draw_energy() {
 	for (int i = 0; i < HEIGHT; i++) {
@@ -341,5 +149,22 @@ void MonteCarlo::draw_space() {
 			cout<<cells[i][j].id<<" ";
 		}
 		cout<<endl;
+	}
+}
+
+void MonteCarlo::clean(vector<cell> *vect){
+	while(vect->size()>0){
+		vect->erase(vect->begin());
+	}
+}
+
+void MonteCarlo::set_cells(cell** cells){
+	for(int i=0;i<HEIGHT;i++){
+		for(int j=0;j<WIDTH;j++){
+			cells[i][j].id = this->cells[i][j].id;
+			cells[i][j].idx_i = this->cells[i][j].idx_i;
+			cells[i][j].idx_j = this->cells[i][j].idx_j;
+			cells[i][j].energy = this->cells[i][j].energy;
+		}
 	}
 }

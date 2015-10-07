@@ -12,6 +12,7 @@ public:
 	void execute();
 	boost::thread* start();
 	void join();
+	void detach();
 	Task* getLastTask();
 	Task* getFirstTask();
 	int getTaskSize();
@@ -21,11 +22,12 @@ public:
 	static WorkStealing* getCore(int idx);
 	static int getCoreSize();
 	static void clear();
+	static void stop();
 private:
 	static vector<WorkStealing*> cores;
-	static boost::mutex mut;
+	boost::mutex mut;
 	static bool flag;
-	boost::thread th;
+	boost::thread *th;
 	deque<Task*> tasks;
 	int id;
 };

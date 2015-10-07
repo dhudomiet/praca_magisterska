@@ -17,26 +17,30 @@
 #include "WorkStealing.h"
 #include "InitializeIds.h"
 #include "CalculateEnergy.h"
+#include "CopySpaces.h"
+#include "FillList.h"
+#include "ExecuteList.h"
 
 class MonteCarlo {
 public:
 	MonteCarlo();
-	MonteCarlo(cell** cells);
+	~MonteCarlo();
 	void initialize_ids();
 	void draw_space();
-	//void cal_energy(int idx_i, int idx_j,int * point, cell** space_of_cells);
-	//int cal_energy(int idx_i, int idx_j,int id, cell** space_of_cells);
-	//void monte_carlo_algorithm();
-	//void fill_list(cell** vect, cell** space);
-	//bool is_on_the_board(int idx_i, int idx_j, cell** space_of_cells);
-	//void copy_spaces(cell** space, cell** source_space);
+	void cal_energy(int idx_i, int idx_j,int * point, cell** space_of_cells);
+	void monte_carlo_algorithm();
+	void fill_list(vector<cell> *vect, cell** space);
+	void executeList(vector<cell> *list, cell** cells, cell** oldstate);
+	void copy_spaces(cell** space, cell** source_space);
 	void calculate_energy();
 	void draw_energy();
-	//void set_cells(cell** cells);
+	void initializeCores();
+	void set_cells(cell** cells);
+	void clean(vector<cell> *vect);
 	cell** cells;
 	cell** oldstate;
 private:
-
+	WorkStealing* cores;
 };
 
 #endif

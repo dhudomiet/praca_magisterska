@@ -14,25 +14,32 @@
 #include <stdlib.h>
 #include <time.h>
 #include "MonteCarlo.h"
+#include "InitializeEnergy.h"
+#include "FillNoRecList.h"
+#include "ExecuteRec.h"
 
 using namespace concurrency;
 
 class Recrystalization {
 public:
 	Recrystalization();
-	/*
+
 	void recrystalization_algorithm();
 	void initializeSpace();
 	void initializeEnergy();
-	void cal_energy(int idx_i, int idx_j,int * point, concurrent_vector<cell*> *space_of_cells);
-	void fill_no_recrystalization_list(concurrent_vector<cell> *list);
+	void cal_energy(int idx_i, int idx_j,int * point, cell** space_of_cells);
+	void fill_no_recrystalization_list(vector<cell> *list);
+	void executeRec(vector<cell>* noRect, vector<cell> *rect);
+	bool is_on_the_board(int idx_i, int idx_j, cell** space_of_cells);
 	void randomRecGrains();
 	void draw_data();
+	void draw_energy();
+	void clean(vector<cell> *vect);
 private:
-	concurrent_vector<cell*> cells;
+	cell** cells;
 	MonteCarlo mc;
-	concurrent_vector<cell> recrystalizationList;
-	*/
+	vector<cell> recrystalizationList;
+
 };
 
 

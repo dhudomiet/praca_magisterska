@@ -3,7 +3,7 @@
 #define INITIALIZEIDS_H
 #include "Task.h"
 #include "constans.h"
-#include <time.h>
+#include <boost\random.hpp>
 class InitializeIds : public Task
 {
 public:
@@ -11,7 +11,7 @@ public:
 	InitializeIds(int begin, int end, cell** cells);
 	~InitializeIds(void);
 	void start();
-	void execute(int begin, int end, cell** cells);
+	void execute();
 private:
 	int begin,end;
 	cell** cells;

@@ -8,6 +8,7 @@ Task::Task(void)
 
 Task::~Task(void)
 {
+	th.detach();
 }
 
 void Task::start(){
@@ -20,4 +21,8 @@ void Task::join(){
 
 void Task::execute(){
 	cout<<"hehe to moja funkcja"<<endl;
+}
+
+void Task::detach(){
+	th.detach();
 }

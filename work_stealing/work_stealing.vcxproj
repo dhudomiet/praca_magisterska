@@ -14,7 +14,13 @@
     <ClInclude Include="CalculateEnergy.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="constans.h" />
+    <ClInclude Include="CopySpaces.h" />
+    <ClInclude Include="ExecuteList.h" />
+    <ClInclude Include="ExecuteRec.h" />
+    <ClInclude Include="FillList.h" />
+    <ClInclude Include="FillNoRecList.h" />
     <ClInclude Include="GrainGrow.h" />
+    <ClInclude Include="InitializeEnergy.h" />
     <ClInclude Include="InitializeIds.h" />
     <ClInclude Include="MonteCarlo.h" />
     <ClInclude Include="Recrystalization.h" />
@@ -24,7 +30,13 @@
   <ItemGroup>
     <ClCompile Include="CalculateEnergy.cpp" />
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="CopySpaces.cpp" />
+    <ClCompile Include="ExecuteList.cpp" />
+    <ClCompile Include="ExecuteRec.cpp" />
+    <ClCompile Include="FillList.cpp" />
+    <ClCompile Include="FillNoRecList.cpp" />
     <ClCompile Include="GrainGrow.cpp" />
+    <ClCompile Include="InitializeEnergy.cpp" />
     <ClCompile Include="InitializeIds.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MonteCarlo.cpp" />

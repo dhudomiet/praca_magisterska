@@ -5,32 +5,32 @@ InitializeIds::InitializeIds(void) : Task()
 {
 }
 
-
-InitializeIds::~InitializeIds(void)
-{
-}
-
 InitializeIds::InitializeIds(int begin, int end, cell** cells) : Task(){
 	this->begin = begin;
 	this->end = end;
 	this->cells = cells;
 }
 
-void InitializeIds::start(){
-	th = boost::thread(&InitializeIds::execute,this,begin,end,cells);
+InitializeIds::~InitializeIds(void)
+{
+	th.detach();
 }
-void InitializeIds::execute(int begin, int end, cell** cells){
-	//cout<<"InitializeIds working..."<<endl;
-	srand(time(NULL));
-	end = (end>HEIGHT)? HEIGHT : end;
+
+void InitializeIds::start(){
+	th = boost::thread(&InitializeIds::execute,this);
+}
+
+void InitializeIds::execute(){
+	boost::mt19937 type;
+	boost::uniform_int<> numbers( 1, NUMBER_OF_IDS);
+	boost::variate_generator< boost::mt19937, boost::uniform_int<> > dice(type, numbers);
 	for(int i=begin;i<end;i++){
 		cells[i] = new cell[WIDTH];
 		for(int j=0;j<WIDTH;j++){
-			cells[i][j].id = rand()%NUMBER_OF_IDS;
+			cells[i][j].id = dice();
 			cells[i][j].energy = 0;
-			cells[i][j].idx_j = j;
 			cells[i][j].idx_i = i;
+			cells[i][j].idx_j = j;
 		}
 	}
-	//cout<<"InitializeIds end work"<<endl;
 }
