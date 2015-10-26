@@ -8,21 +8,24 @@ InitializeEnergy::InitializeEnergy(void) : Task()
 
 InitializeEnergy::~InitializeEnergy(void)
 {
+	th->detach();
 }
 
-InitializeEnergy::InitializeEnergy(int begin, int end, cell** cells) : Task(){
-	this->begin = begin;
-	this->end = end;
+InitializeEnergy::InitializeEnergy(int params[4], cell** cells) : Task(){
+	for(int i=0;i<4;i++)
+		this->params[i] = params[i];
 	this->cells = cells;
 }
 	
 void InitializeEnergy::start(){
-	th = boost::thread(&InitializeEnergy::execute,this);
+	th = new boost::thread(&InitializeEnergy::execute,this);
 }
 
 void InitializeEnergy::execute(){
-	for(int i=begin;i<end;i++) {
-		for(int j=0;j<WIDTH;j++) {
+	int end1 = params[0]+params[1];
+	int end2 = params[2]+params[3];
+	for(int i=params[0];i<end1;i++) {
+		for(int j=params[2];j<end2;j++) {
 			if (is_on_the_board(i, j, cells)) {
 				cells[i][j].energy = ENERGY_ON_THE_BOARD;
 			} else {
@@ -109,4 +112,8 @@ bool InitializeEnergy::is_on_the_board(int idx_i, int idx_j, cell** space_of_cel
 		j=m;
 	}
 	return false;
+}
+
+void InitializeEnergy::toString(){
+	cout<<"execute task InitializeEnergy..."<<endl;
 }

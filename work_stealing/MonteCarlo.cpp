@@ -8,16 +8,29 @@
 #include "MonteCarlo.h"
 
 MonteCarlo::MonteCarlo() {
-	cores = new WorkStealing[CORES];
+	//manager = new BusyLeafsManager();
+	manager = new WorkStealingManager();
 	initialize_ids();
-	//calculate_energy();
 }
 
 MonteCarlo::~MonteCarlo(){
-	//delete cores;
+	delete cells;
+	delete oldstate;
+	delete manager;
 }
 void MonteCarlo::initialize_ids() {
-	int sum = 0;
+	cells = new cell*[HEIGHT];
+	oldstate = new cell*[HEIGHT];
+	for(int i=0;i<HEIGHT;i++){
+		cells[i] = new cell[WIDTH];
+		oldstate[i] = new cell[WIDTH];
+	}
+	cout<<"start initialize ids..."<<endl;
+	manager->initializeIds(cells);
+	manager->run();
+	cout<<"end initialize ids"<<endl;
+	//draw_space();
+	/*int sum = 0;
 	int step = HEIGHT/CORES;
 	clock_t start,stop;
 	boost::thread_group group;
@@ -39,11 +52,16 @@ void MonteCarlo::initialize_ids() {
 	stop = clock();
 	//cout<<"time execution: "<<(float)(stop-start)<<endl;
 	//delete init;
-	//draw_space();
+	//draw_space();*/
 }
 
 void MonteCarlo::calculate_energy() {
-	int sum = 0;
+	cout<<"start calculate energy..."<<endl;
+	manager->calculateEnergy(cells);
+	manager->run();
+	cout<<"end calculate energy"<<endl;
+	//draw_energy();
+/*	int sum = 0;
 	int step = HEIGHT/CORES;
 	boost::thread_group group;
 	int i=0;
@@ -62,7 +80,8 @@ void MonteCarlo::calculate_energy() {
 void MonteCarlo::initializeCores(){
 	for(unsigned i = 0;i<CORES;i++){
 		WorkStealing* wo = new WorkStealing();
-	}
+	}*/
+
 }
 
 
@@ -74,13 +93,13 @@ void MonteCarlo::monte_carlo_algorithm() {
 	calculate_energy();
 	vector<cell> listCells;
 	copy_spaces(oldstate, cells);
-	srand(time(NULL));
 	for (int i = 0; i < 100; i++) {
 		fill_list(&listCells, cells);
-		//cout<<listCells.size()<<endl;
+		if(listCells.size()>0){
 		executeList(&listCells,cells,oldstate);
 		listCells.clear();
 		copy_spaces(oldstate, cells);
+		}
 	}
 	stop=clock();
 	float time = (float)stop - (float)start;
@@ -90,7 +109,11 @@ void MonteCarlo::monte_carlo_algorithm() {
 }
 
 void MonteCarlo::executeList(vector<cell> *list, cell** cells, cell** oldstate){
-	int sum = 0;
+	//cout<<"start execute list..."<<endl;
+	manager->executeList(list,cells,oldstate);
+	manager->run();
+	//cout<<"end execute list"<<endl;
+	/*int sum = 0;
 	int step = HEIGHT/CORES;
 	boost::thread_group group;
 	while(sum<list->size()){
@@ -101,11 +124,15 @@ void MonteCarlo::executeList(vector<cell> *list, cell** cells, cell** oldstate){
 	for(int i=CORES-1;i>=0;i--){
 		group.add_thread(WorkStealing::getCore(i)->start());
 	}
-	group.join_all();
+	group.join_all();*/
 }
 
 void MonteCarlo::fill_list(vector<cell> *vect, cell** space) {
-	int sum = 0;
+	//cout<<"start fill list..."<<endl;
+	manager->fillList(vect,space);
+	manager->run();
+	//cout<<"end fill list"<<endl;
+	/*int sum = 0;
 	int step = HEIGHT/CORES;
 	boost::thread_group group;
 	while(sum<HEIGHT){
@@ -116,11 +143,15 @@ void MonteCarlo::fill_list(vector<cell> *vect, cell** space) {
 	for(int i=CORES-1;i>=0;i--){
 		group.add_thread(WorkStealing::getCore(i)->start());
 	}
-	group.join_all();
+	group.join_all();*/
 }
 
 void MonteCarlo::copy_spaces(cell** space, cell** source_space) {
-	int sum = 0;
+	//cout<<"start copy spaces..."<<endl;
+	manager->copySpaces(space,source_space);
+	manager->run();
+	//cout<<"end copy spaces"<<endl;
+	/*int sum = 0;
 	int step = HEIGHT/CORES;
 	boost::thread_group group;
 	while(sum<HEIGHT){
@@ -131,7 +162,7 @@ void MonteCarlo::copy_spaces(cell** space, cell** source_space) {
 	for(int i=CORES-1;i>=0;i--){
 		group.add_thread(WorkStealing::getCore(i)->start());
 	}
-	group.join_all();
+	group.join_all();*/
 }
 
 void MonteCarlo::draw_energy() {
@@ -168,3 +199,11 @@ void MonteCarlo::set_cells(cell** cells){
 		}
 	}
 }
+
+WorkStealingManager* MonteCarlo::getManager(){
+	return manager;
+}
+
+/*BusyLeafsManager* MonteCarlo::getBusyLeafsManager(){
+	return manager;
+}*/

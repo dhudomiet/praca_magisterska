@@ -15,15 +15,16 @@ ExecuteList::ExecuteList(int begin,int end,vector<cell> *vect, cell** cells, cel
 
 ExecuteList::~ExecuteList(void)
 {
-	th.detach();
+	th->detach();
 }
 
 void ExecuteList::start(){
-	th = boost::thread(&ExecuteList::execute,this);
+	th = new boost::thread(&ExecuteList::execute,this);
 }
 
 void ExecuteList::execute(){
-	end = (end>vect->size())? vect->size() : end;
+	//end = (end>vect->size())? vect->size() : end;
+	//cout<<begin<<"  "<<end<<endl;
 	for(int i=begin;i<end;i++){
 		cell data = vect->at(i);
 		int tab[2];
@@ -131,4 +132,8 @@ void ExecuteList::cal_energy(int idx_i, int idx_j,int * point, cell** space_of_c
 	point[1] = energy;
 	delete[] tab;
 	return;
+}
+
+void ExecuteList::toString(){
+	cout<<"execute task ExecuteList..."<<endl;
 }

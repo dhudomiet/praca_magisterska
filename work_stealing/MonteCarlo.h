@@ -14,12 +14,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include "constans.h"
-#include "WorkStealing.h"
-#include "InitializeIds.h"
-#include "CalculateEnergy.h"
-#include "CopySpaces.h"
-#include "FillList.h"
-#include "ExecuteList.h"
+#include "WorkStealingManager.h"
+#include "BusyLeafsManager.h"
 
 class MonteCarlo {
 public:
@@ -37,10 +33,13 @@ public:
 	void initializeCores();
 	void set_cells(cell** cells);
 	void clean(vector<cell> *vect);
+	WorkStealingManager* getManager();
+	BusyLeafsManager* getBusyLeafsManager();
 	cell** cells;
 	cell** oldstate;
 private:
-	WorkStealing* cores;
+	WorkStealingManager* manager;
+	//BusyLeafsManager* manager;
 };
 
 #endif

@@ -6,23 +6,27 @@ CalculateEnergy::CalculateEnergy(void) : Task()
 
 }
 
-CalculateEnergy::CalculateEnergy(int begin, int end, cell** cells) : Task(){
-	this->begin = begin;
-	this->end = end;
+CalculateEnergy::CalculateEnergy(int params[4], cell** cells) : Task(){
+	for(int i=0;i<4;i++){
+		this->params[i] = params[i];
+	}
 	this->cells = cells;
 }
 
 CalculateEnergy::~CalculateEnergy(void)
 {
+	th->detach();
 }
 
 void CalculateEnergy::start(){
-	th = boost::thread(&CalculateEnergy::execute,this);
+	th = new boost::thread(&CalculateEnergy::execute,this);
 }
 
 void CalculateEnergy::execute(){
-	for(int i=begin;i<end;i++){
-		for(int j=0;j<WIDTH;j++){
+	int end1 = params[0]+params[1];
+	int end2 = params[2]+params[3];
+	for(int i=params[0];i<end1;i++){
+		for(int j=params[2];j<end2;j++){
 			cells[i][j].energy = cal_energy(i,j,cells[i][j].id,cells);
 		}
 	}
@@ -110,4 +114,8 @@ int CalculateEnergy::cal_energy(int idx_i, int idx_j,int id, cell** space_of_cel
 	}
 	delete[] tab;
 	return energy;
+}
+
+void CalculateEnergy::toString(){
+	cout<<"execute task CalculateEnergy..."<<endl;
 }

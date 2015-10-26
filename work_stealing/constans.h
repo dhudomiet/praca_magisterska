@@ -1,11 +1,11 @@
 #ifndef CONSTANS_H_
 #define CONSTANS_H_
 
-#define HEIGHT 100
-#define WIDTH 100
-#define NUMBER_OF_IDS 100
+#define HEIGHT 200
+#define WIDTH 200
+#define NUMBER_OF_IDS 200
 #define H 4
-#define ENERGY_ON_THE_BOARD 10
+#define ENERGY_ON_THE_BOARD 2
 #define ENERGY_ON_GRAIN 7
 #define RECRYSTALIZATION_GRAINS 5
 #define FLAG true
@@ -13,6 +13,7 @@
 #define loggErr(a,b) if(FLAG == true)std::cout<<a<<" error nr: "<<b<<std::endl;
 #define loggTime(a,b) if(FLAG ==true)std::cout<<a<<" "<<b<<std::endl;
 #define CORES boost::thread::hardware_concurrency()
+#define TASKS 10; //number of tasks for one core to execution
 typedef struct {
 	int id;
 	int idx_i;
@@ -20,5 +21,16 @@ typedef struct {
 	bool flag;
 	int energy;
 }cell;
+
+typedef enum {
+	INITIALIZE_IDS,
+	CALCULATE_ENERGY,
+	COPY_SPACES,
+	EXECUTE_LIST,
+	EXECUTE_REC,
+	FILL_LIST,
+	FILL_NO_RECT,
+	INITIALIZE_ENERGY
+}Tasks;
 
 #endif

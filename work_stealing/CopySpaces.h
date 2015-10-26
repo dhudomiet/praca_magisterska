@@ -9,12 +9,13 @@ class CopySpaces : public Task
 {
 public:
 	CopySpaces(void);
-	CopySpaces(int begin, int end, cell** source, cell** space);
+	CopySpaces(int params[4], cell** source, cell** space);
 	~CopySpaces(void);
 	void start();
 	void execute();
+	void toString();
 private:
-	int begin,end;
+	int params[4];
 	cell** source;
 	cell** space;
 };

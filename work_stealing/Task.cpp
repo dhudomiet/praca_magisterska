@@ -8,15 +8,15 @@ Task::Task(void)
 
 Task::~Task(void)
 {
-	th.detach();
+	th->detach();
 }
 
 void Task::start(){
-	th = boost::thread(&Task::execute,this);
+	th = new boost::thread(&Task::execute,this);
 }
 
 void Task::join(){
-	th.join();
+	th->join();
 }
 
 void Task::execute(){
@@ -24,5 +24,9 @@ void Task::execute(){
 }
 
 void Task::detach(){
-	th.detach();
+	th->detach();
+}
+
+void Task::toString(){
+	cout<<"execute Task..."<<endl;
 }

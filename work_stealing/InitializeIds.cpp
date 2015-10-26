@@ -1,36 +1,38 @@
 #include "InitializeIds.h"
 
 
-InitializeIds::InitializeIds(void) : Task()
-{
-}
-
-InitializeIds::InitializeIds(int begin, int end, cell** cells) : Task(){
-	this->begin = begin;
-	this->end = end;
+InitializeIds::InitializeIds(int params[4], cell** cells) : engine(1), dist(1,NUMBER_OF_IDS), generator(engine,dist) {
+	for(int i=0;i<4;i++){
+		this->params[i] = params[i];
+	}
 	this->cells = cells;
+	
 }
 
 InitializeIds::~InitializeIds(void)
 {
-	th.detach();
+	th->detach();
 }
 
 void InitializeIds::start(){
-	th = boost::thread(&InitializeIds::execute,this);
+	th = new boost::thread(&InitializeIds::execute,this);
 }
 
 void InitializeIds::execute(){
-	boost::mt19937 type;
-	boost::uniform_int<> numbers( 1, NUMBER_OF_IDS);
-	boost::variate_generator< boost::mt19937, boost::uniform_int<> > dice(type, numbers);
-	for(int i=begin;i<end;i++){
-		cells[i] = new cell[WIDTH];
-		for(int j=0;j<WIDTH;j++){
-			cells[i][j].id = dice();
+	int end1 = params[0]+params[1];
+	int end2 = params[2]+params[3];
+	srand(time(NULL));
+	for(int i=params[0];i<end1;i++){
+		for(int j=params[2];j<end2;j++){
+			cells[i][j].id = rand()%(NUMBER_OF_IDS)+1;
 			cells[i][j].energy = 0;
 			cells[i][j].idx_i = i;
 			cells[i][j].idx_j = j;
 		}
 	}
 }
+
+void InitializeIds::toString(){
+	cout<<"execute task InitializeIds..."<<endl;
+}
+

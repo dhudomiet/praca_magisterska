@@ -5,40 +5,40 @@ ExecuteRec::ExecuteRec(void)
 {
 }
 
-ExecuteRec::ExecuteRec(int begin, int end,vector<cell> *noRect, vector<cell> *vect, cell** cells){
+ExecuteRec::ExecuteRec(int begin, int end,vector<cell> *noRect, vector<cell> *vect, cell** cells, cell** oldstate){
 	this->begin = begin;
 	this->end = end;
 	this->vect = vect;
 	this->noRect = noRect;
 	this->cells = cells;
+	this->oldstate = oldstate;
 }
 
 ExecuteRec::~ExecuteRec(void)
 {
+	th->detach();
 }
 
 void ExecuteRec::start(){
-	th = boost::thread(&ExecuteRec::execute,this);
+	th = new boost::thread(&ExecuteRec::execute,this);
 }
 	
 void ExecuteRec::execute(){
-	end = (end>noRect->size())? noRect->size() : end;
 	for(int i=begin;i<end;i++){
 		cell grain = noRect->at(i);
 		int tab[2];
 		int *p = tab;
-		cal_energy(grain.idx_i, grain.idx_j, p, cells);
+		cal_energy(grain.idx_i, grain.idx_j, p, oldstate);
 		if (p[0] < 0) {
 			int energy = 0;
 			energy = p[1] + H;
-			int energyRec = cells[grain.idx_i][grain.idx_j].energy+ energy;
-			energy = cells[grain.idx_i][grain.idx_j].energy;
+			int energyRec = oldstate[grain.idx_i][grain.idx_j].energy+ energy;
+			energy = oldstate[grain.idx_i][grain.idx_j].energy;
 			if (energyRec > energy) {
 				cells[grain.idx_i][grain.idx_j].energy=0;
 				cells[grain.idx_i][grain.idx_j].id=p[0];
 				vect->push_back(cells[grain.idx_i][grain.idx_j]);
 			}
-
 		}
 	}
 }
@@ -167,4 +167,8 @@ void ExecuteRec::cal_energy(int idx_i, int idx_j, int * point, cell** space_of_c
 			delete[] tab;
 		}
 
+}
+
+void ExecuteRec::toString(){
+	cout<<"execute task ExecuteRex..."<<endl;
 }

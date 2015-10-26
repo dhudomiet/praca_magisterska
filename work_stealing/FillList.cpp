@@ -6,26 +6,28 @@ FillList::FillList(void) : Task()
 {
 }
 
-FillList::FillList(int begin, int end, vector<cell> *vect, cell** cells) : Task(){
-	this->begin = begin;
-	this->end = end;
+FillList::FillList(int params[4], vector<cell> *vect, cell** cells) : Task(){
+	for(int i=0;i<4;i++){
+		this->params[i] = params[i];
+	}
 	this->vect = vect;
 	this->cells = cells;
 }
 
 FillList::~FillList(void)
 {
-	th.detach();
+	th->detach();
 }
 
 void FillList::start(){
-	th = boost::thread(&FillList::execute,this);
+	th = new boost::thread(&FillList::execute,this);
 }
 
 void FillList::execute(){
-	end = (end>HEIGHT)? HEIGHT : end;
-	for(int i=begin;i<end;i++){
-		for(int j=0;j<WIDTH;j++){
+	int end1 = params[0]+params[1];
+	int end2 = params[2]+params[3];
+	for(int i=params[0];i<end1;i++){
+		for(int j=params[2];j<end2;j++){
 			if(is_on_the_board(i,j,cells)){
 				mut.lock();
 				vect->push_back(cells[i][j]);
@@ -112,4 +114,8 @@ bool FillList::is_on_the_board(int idx_i, int idx_j, cell** space_of_cells) {
 		j=m;
 	}
 	return false;
+}
+
+void FillList::toString(){
+	cout<<"execute task FillList..."<<endl;
 }

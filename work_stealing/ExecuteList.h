@@ -14,6 +14,7 @@ public:
 	void start();
 	void execute();
 	void cal_energy(int idx_i, int idx_j,int * point, cell** space_of_cells);
+	void toString();
 private:
 	int begin,end;
 	vector<cell> *vect;

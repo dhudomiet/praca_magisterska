@@ -10,13 +10,14 @@ class CalculateEnergy : public Task
 {
 public:
 	CalculateEnergy(void);
-	CalculateEnergy(int begin, int end, cell** cells);
+	CalculateEnergy(int params[4], cell** cells);
 	~CalculateEnergy(void);
 	void start();
 	void execute();
 	int cal_energy(int idx_i, int idx_j,int id, cell** space_of_cells);
+	void toString();
 private:
-	int begin,end;
+	int params[4];
 	cell** cells;
 };
 

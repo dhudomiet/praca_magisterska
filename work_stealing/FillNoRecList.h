@@ -9,15 +9,17 @@ class FillNoRecList : public Task
 {
 public:
 	FillNoRecList(void);
-	FillNoRecList(int begin, int end, vector<cell> *vect, cell** cells);
+	FillNoRecList(int params[4], vector<cell> *vect, cell** cells);
 	~FillNoRecList(void);
 	void start();
 	void execute();
+	void toString();
 
 private:
-	int begin, end;
+	int params[4];
 	cell** cells;
 	vector<cell> *vect;
+	static boost::mutex mut;
 };
 
 #endif

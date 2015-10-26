@@ -60,6 +60,15 @@
     <ClInclude Include="ExecuteRec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WorkStealingManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BusyLeafs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BusyLeafsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp">
@@ -105,6 +114,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ExecuteRec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkStealingManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BusyLeafs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BusyLeafsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

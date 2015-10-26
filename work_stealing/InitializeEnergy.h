@@ -9,14 +9,15 @@ class InitializeEnergy : public Task
 {
 public:
 	InitializeEnergy(void);
-	InitializeEnergy(int begin, int end, cell** cells);
+	InitializeEnergy(int params[4], cell** cells);
 	~InitializeEnergy(void);
 	void start();
 	void execute();
 	bool is_on_the_board(int idx_i, int idx_j, cell** space_of_cells);
+	void toString();
 
 private:
-	int begin, end;
+	int params[4];
 	cell** cells;
 };
 

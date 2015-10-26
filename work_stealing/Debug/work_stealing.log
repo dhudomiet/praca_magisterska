@@ -1,10 +1,15 @@
-﻿Build started 2015-10-07 17:54:07.
+﻿Build started 2015-10-25 21:50:15.
      1>Project "C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\boost_1_58_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Recrystalization.cpp
-         Recrystalization.cpp
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(84): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(111): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\boost_1_58_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BusyLeafsManager.cpp CalculateEnergy.cpp CopySpaces.cpp ExecuteList.cpp ExecuteRec.cpp FillList.cpp FillNoRecList.cpp InitializeEnergy.cpp InitializeIds.cpp MonteCarlo.cpp Recrystalization.cpp Task.cpp WorkStealing.cpp WorkStealingManager.cpp main.cpp
+         BusyLeafsManager.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(16): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(97): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(98): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(98): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(225): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(226): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(226): warning C4018: '>=' : signed/unsigned mismatch
      1>c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2761): warning C4996: 'std::_Fill_n': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2747) : see declaration of 'std::_Fill_n'
                  c:\boost_1_58_0\boost\random\detail\polynomial.hpp(114) : see reference to function template instantiation '_OutIt std::fill_n<boost::random::detail::polynomial_ops::digit_t*,size_t,boost::random::detail::polynomial_ops::digit_t>(_OutIt,_Diff,const _Ty &)' being compiled
@@ -14,8 +19,96 @@
                      _Diff=size_t,
                      _Ty=boost::random::detail::polynomial_ops::digit_t
                  ]
+         Generating Code...
+         Compiling...
+         main.cpp
+     1>c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2761): warning C4996: 'std::_Fill_n': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2747) : see declaration of 'std::_Fill_n'
+                 c:\boost_1_58_0\boost\random\detail\polynomial.hpp(114) : see reference to function template instantiation '_OutIt std::fill_n<boost::random::detail::polynomial_ops::digit_t*,size_t,boost::random::detail::polynomial_ops::digit_t>(_OutIt,_Diff,const _Ty &)' being compiled
+                 with
+                 [
+                     _OutIt=boost::random::detail::polynomial_ops::digit_t *,
+                     _Diff=size_t,
+                     _Ty=boost::random::detail::polynomial_ops::digit_t
+                 ]
+         WorkStealingManager.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\workstealingmanager.cpp(15): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\workstealingmanager.cpp(102): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\workstealingmanager.cpp(103): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\workstealingmanager.cpp(103): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\workstealingmanager.cpp(242): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\workstealingmanager.cpp(243): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\workstealingmanager.cpp(243): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2761): warning C4996: 'std::_Fill_n': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2747) : see declaration of 'std::_Fill_n'
+                 c:\boost_1_58_0\boost\random\detail\polynomial.hpp(114) : see reference to function template instantiation '_OutIt std::fill_n<boost::random::detail::polynomial_ops::digit_t*,size_t,boost::random::detail::polynomial_ops::digit_t>(_OutIt,_Diff,const _Ty &)' being compiled
+                 with
+                 [
+                     _OutIt=boost::random::detail::polynomial_ops::digit_t *,
+                     _Diff=size_t,
+                     _Ty=boost::random::detail::polynomial_ops::digit_t
+                 ]
+         WorkStealing.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\workstealing.cpp(27): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\workstealing.cpp(60): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2761): warning C4996: 'std::_Fill_n': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2747) : see declaration of 'std::_Fill_n'
+                 c:\boost_1_58_0\boost\random\detail\polynomial.hpp(114) : see reference to function template instantiation '_OutIt std::fill_n<boost::random::detail::polynomial_ops::digit_t*,size_t,boost::random::detail::polynomial_ops::digit_t>(_OutIt,_Diff,const _Ty &)' being compiled
+                 with
+                 [
+                     _OutIt=boost::random::detail::polynomial_ops::digit_t *,
+                     _Diff=size_t,
+                     _Ty=boost::random::detail::polynomial_ops::digit_t
+                 ]
+         Recrystalization.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\recrystalization.cpp(128): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2761): warning C4996: 'std::_Fill_n': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2747) : see declaration of 'std::_Fill_n'
+                 c:\boost_1_58_0\boost\random\detail\polynomial.hpp(114) : see reference to function template instantiation '_OutIt std::fill_n<boost::random::detail::polynomial_ops::digit_t*,size_t,boost::random::detail::polynomial_ops::digit_t>(_OutIt,_Diff,const _Ty &)' being compiled
+                 with
+                 [
+                     _OutIt=boost::random::detail::polynomial_ops::digit_t *,
+                     _Diff=size_t,
+                     _Ty=boost::random::detail::polynomial_ops::digit_t
+                 ]
+         MonteCarlo.cpp
+     1>c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2761): warning C4996: 'std::_Fill_n': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2747) : see declaration of 'std::_Fill_n'
+                 c:\boost_1_58_0\boost\random\detail\polynomial.hpp(114) : see reference to function template instantiation '_OutIt std::fill_n<boost::random::detail::polynomial_ops::digit_t*,size_t,boost::random::detail::polynomial_ops::digit_t>(_OutIt,_Diff,const _Ty &)' being compiled
+                 with
+                 [
+                     _OutIt=boost::random::detail::polynomial_ops::digit_t *,
+                     _Diff=size_t,
+                     _Ty=boost::random::detail::polynomial_ops::digit_t
+                 ]
+         InitializeIds.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\initializeids.cpp(24): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2761): warning C4996: 'std::_Fill_n': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2747) : see declaration of 'std::_Fill_n'
+                 c:\boost_1_58_0\boost\random\detail\polynomial.hpp(114) : see reference to function template instantiation '_OutIt std::fill_n<boost::random::detail::polynomial_ops::digit_t*,size_t,boost::random::detail::polynomial_ops::digit_t>(_OutIt,_Diff,const _Ty &)' being compiled
+                 with
+                 [
+                     _OutIt=boost::random::detail::polynomial_ops::digit_t *,
+                     _Diff=size_t,
+                     _Ty=boost::random::detail::polynomial_ops::digit_t
+                 ]
+         InitializeEnergy.cpp
+         FillNoRecList.cpp
+         FillList.cpp
+         ExecuteRec.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\executerec.cpp(48): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         ExecuteList.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\executelist.cpp(44): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         CopySpaces.cpp
+         CalculateEnergy.cpp
+     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\calculateenergy.cpp(36): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         Task.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\boost_1_58_0\stage\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.lib" /MACHINE:X86 Debug\CalculateEnergy.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\boost_1_58_0\stage\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.lib" /MACHINE:X86 Debug\BusyLeafs.obj
+         Debug\BusyLeafsManager.obj
+         Debug\CalculateEnergy.obj
          Debug\Cell.obj
          Debug\CopySpaces.obj
          Debug\ExecuteList.obj
@@ -30,9 +123,10 @@
          Debug\Recrystalization.obj
          Debug\Task.obj
          Debug\WorkStealing.obj
+         Debug\WorkStealingManager.obj
          work_stealing.vcxproj -> C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.exe
      1>Done Building Project "C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:04.71
+Time Elapsed 00:00:47.64

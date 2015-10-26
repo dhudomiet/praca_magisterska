@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BusyLeafs.h" />
+    <ClInclude Include="BusyLeafsManager.h" />
     <ClInclude Include="CalculateEnergy.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="constans.h" />
@@ -26,8 +28,11 @@
     <ClInclude Include="Recrystalization.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="WorkStealing.h" />
+    <ClInclude Include="WorkStealingManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BusyLeafs.cpp" />
+    <ClCompile Include="BusyLeafsManager.cpp" />
     <ClCompile Include="CalculateEnergy.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="CopySpaces.cpp" />
@@ -43,6 +48,7 @@
     <ClCompile Include="Recrystalization.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="WorkStealing.cpp" />
+    <ClCompile Include="WorkStealingManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6A210052-6EA2-4DAD-AF69-802AEACBBDD8}</ProjectGuid>

@@ -23,7 +23,7 @@ using namespace concurrency;
 class Recrystalization {
 public:
 	Recrystalization();
-
+	~Recrystalization();
 	void recrystalization_algorithm();
 	void initializeSpace();
 	void initializeEnergy();
@@ -37,8 +37,11 @@ public:
 	void clean(vector<cell> *vect);
 private:
 	cell** cells;
+	cell** oldstate;
 	MonteCarlo mc;
 	vector<cell> recrystalizationList;
+	WorkStealingManager* manager;
+	//BusyLeafsManager* manager;
 
 };
 

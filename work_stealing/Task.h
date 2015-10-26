@@ -15,8 +15,9 @@ public:
 	void join();
 	virtual void execute();
 	void detach();
+	virtual void toString();
 protected:
-	boost::thread th;
+	boost::thread *th;
 };
 
 #endif
