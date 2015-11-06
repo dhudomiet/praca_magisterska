@@ -65,11 +65,13 @@
   <ItemGroup>
     <ClInclude Include="Cell.h" />
     <ClInclude Include="constans.h" />
+    <ClInclude Include="GrainGrow.h" />
     <ClInclude Include="MonteCarlo.h" />
     <ClInclude Include="Recrystalization.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="GrainGrow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MonteCarlo.cpp" />
     <ClCompile Include="Recrystalization.cpp" />

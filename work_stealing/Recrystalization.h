@@ -40,7 +40,7 @@ private:
 	cell** oldstate;
 	MonteCarlo mc;
 	vector<cell> recrystalizationList;
-	WorkStealingManager* manager;
+	Manager* manager;
 	//BusyLeafsManager* manager;
 
 };

@@ -55,6 +55,42 @@ void WorkStealingManager::initializeIds(cell** cells){
 	}
 }
 
+void WorkStealingManager::initializeSpace(int** space){
+	int sum = 0;
+	int step = HEIGHT/(CORES-1);
+	int sumWid = 0;
+	int t = TASKS;
+	int stepWid = WIDTH/((t>WIDTH)? WIDTH : t);
+	int i=0;
+	while(sum<HEIGHT){
+		if(sum<HEIGHT && (sum+step)>=HEIGHT){
+			step = HEIGHT-sum;
+		}
+		while(sumWid<WIDTH){
+			int params[4];
+			if(sumWid<WIDTH && (sumWid+stepWid)>=WIDTH){
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = WIDTH-sumWid;
+			}else{
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = stepWid;
+			}
+			InitializeSpace* wsk = new InitializeSpace(params,space);
+			WorkStealing::getCore(i)->addTask(wsk);
+			sumWid+=stepWid;
+		}
+		sum+=step;
+		sumWid=0;
+		if(++i==WorkStealing::getCoreSize()){
+			--i;
+		}
+	}
+}
+
 void WorkStealingManager::calculateEnergy(cell** cells){
 	int sum = 0;
 	int step = HEIGHT/(CORES-1);
@@ -195,6 +231,43 @@ void WorkStealingManager::copySpaces(cell** space, cell** source_space){
 	}
 }
 
+void WorkStealingManager::copyGrows(int** space, int** source){
+	int sum = 0;
+	int step = HEIGHT/(CORES-1);
+	int sumWid = 0;
+	int t = TASKS;
+	int stepWid = WIDTH/((t>WIDTH)? WIDTH : t);
+	int i=0;
+	while(sum<HEIGHT){
+		if(sum<HEIGHT && (sum+step)>=HEIGHT){
+			step = HEIGHT-sum;
+		}
+		while(sumWid<WIDTH){
+			int params[4];
+			if(sumWid<WIDTH && (sumWid+stepWid)>=WIDTH){
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = WIDTH-sumWid;
+			}else{
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = stepWid;
+			}
+			CopyGrows* wsk = new CopyGrows(params,space, source);
+			WorkStealing::getCore(i)->addTask(wsk);
+			sumWid+=stepWid;
+			//delete wsk;
+		}
+		sum+=step;
+		sumWid=0;
+		if(++i==WorkStealing::getCoreSize()){
+			--i;
+		}
+	}
+}
+
 void WorkStealingManager::initializeEnergy(cell** cells){
 	int sum = 0;
 	int step = HEIGHT/(CORES-1);
@@ -289,6 +362,42 @@ void WorkStealingManager::fillNoRectList(vector<cell> *list, cell** cells){
 			WorkStealing::getCore(i)->addTask(wsk);
 			sumWid+=stepWid;
 			//delete wsk;
+		}
+		sum+=step;
+		sumWid=0;
+		if(++i==WorkStealing::getCoreSize()){
+			--i;
+		}
+	}
+}
+
+void WorkStealingManager::executeGrainGrow(int** space, int** old_space){
+	int sum = 0;
+	int step = HEIGHT/(CORES-1);
+	int sumWid = 0;
+	int t = TASKS;
+	int stepWid = WIDTH/((t>WIDTH)? WIDTH : t);
+	int i=0;
+	while(sum<HEIGHT){
+		if(sum<HEIGHT && (sum+step)>=HEIGHT){
+			step = HEIGHT-sum;
+		}
+		while(sumWid<WIDTH){
+			int params[4];
+			if(sumWid<WIDTH && (sumWid+stepWid)>=WIDTH){
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = WIDTH-sumWid;
+			}else{
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = stepWid;
+			}
+			ExecuteGrainGrow* wsk = new ExecuteGrainGrow(params,space,old_space);
+			WorkStealing::getCore(i)->addTask(wsk);
+			sumWid+=stepWid;
 		}
 		sum+=step;
 		sumWid=0;

@@ -200,10 +200,6 @@ void MonteCarlo::set_cells(cell** cells){
 	}
 }
 
-WorkStealingManager* MonteCarlo::getManager(){
+Manager* MonteCarlo::getManager(){
 	return manager;
 }
-
-/*BusyLeafsManager* MonteCarlo::getBusyLeafsManager(){
-	return manager;
-}*/

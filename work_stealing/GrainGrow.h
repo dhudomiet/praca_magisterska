@@ -11,27 +11,26 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
-#include <time.h>
-
-#define HEIGHT 100
-#define WIDTH 100
-#define NUMBER_OF_GRAINS 9
-
-
+#include "constans.h"
+#include "Manager.h"
+#include "WorkStealingManager.h"
+#include "BusyLeafsManager.h"
 
 class Grain_grow {
 public:
 	Grain_grow();
 	~Grain_grow();
 	void initialize_space();
-	void copy_spaces(int (*space)[WIDTH], int (*source_space)[WIDTH]);
-	bool is_neighbor(int idx_i, int idx_j, int *tab, int (*space_of_cells)[WIDTH]);
+	void copy_spaces(int** space, int** source_space);
+	void executeGrainGrow(int** space, int** old_space);
 	void draw_space();
 	void grain_grow_algorithm();
+	bool is_fill_all();
 
-	int space_of_cells[HEIGHT][WIDTH];
-	int old_space[HEIGHT][WIDTH];
-
+private:
+	int** space_of_cells;
+	int** old_space;
+	Manager* manager;
 };
 
 #endif /* GRAINGROW_H_ */

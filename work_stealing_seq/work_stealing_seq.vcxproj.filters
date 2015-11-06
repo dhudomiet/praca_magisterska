@@ -27,6 +27,9 @@
     <ClInclude Include="Recrystalization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GrainGrow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Recrystalization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GrainGrow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

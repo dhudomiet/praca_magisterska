@@ -4,6 +4,7 @@
 #include <boost\thread.hpp>
 #include "MonteCarlo.h"
 #include "Recrystalization.h"
+#include "GrainGrow.h"
 
 using namespace std;
 /*
@@ -69,8 +70,11 @@ int main(){
 	watek2.join();*/
 	//MonteCarlo mc;
 	//mc.monte_carlo_algorithm();
-	Recrystalization rec;
-	rec.recrystalization_algorithm();
+	//Recrystalization rec;
+	//rec.recrystalization_algorithm();
+	Grain_grow g;
+	g.grain_grow_algorithm();
+	
 	system("pause");
 	return 0;
 

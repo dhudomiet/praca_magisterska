@@ -16,6 +16,7 @@
 #include "constans.h"
 #include "WorkStealingManager.h"
 #include "BusyLeafsManager.h"
+#include "Manager.h"
 
 class MonteCarlo {
 public:
@@ -33,12 +34,11 @@ public:
 	void initializeCores();
 	void set_cells(cell** cells);
 	void clean(vector<cell> *vect);
-	WorkStealingManager* getManager();
-	BusyLeafsManager* getBusyLeafsManager();
+	Manager* getManager();
 	cell** cells;
 	cell** oldstate;
 private:
-	WorkStealingManager* manager;
+	Manager* manager;
 	//BusyLeafsManager* manager;
 };
 

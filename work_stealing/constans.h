@@ -1,9 +1,10 @@
 #ifndef CONSTANS_H_
 #define CONSTANS_H_
 
-#define HEIGHT 200
-#define WIDTH 200
-#define NUMBER_OF_IDS 200
+#define HEIGHT 10000
+#define WIDTH 10000
+#define NUMBER_OF_IDS 20
+#define NUMBER_OF_GRAINS 100
 #define H 4
 #define ENERGY_ON_THE_BOARD 2
 #define ENERGY_ON_GRAIN 7

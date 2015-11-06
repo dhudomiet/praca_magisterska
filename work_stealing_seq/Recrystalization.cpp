@@ -52,7 +52,7 @@ void Recrystalization::recrystalization_algorithm() {
 	stop = clock();
 	float t = (float)stop - (float)start;
 	loggTime("time of execution recrystalization: ",t);
-	draw_data();
+	//draw_data();
 }
 
 void Recrystalization::draw_data() {
@@ -73,7 +73,6 @@ void Recrystalization::initializeSpace() {
 	mc.monte_carlo_algorithm();
 	mc.set_cells(cells);
 	initializeEnergy();
-
 }
 
 void Recrystalization::initializeEnergy() {

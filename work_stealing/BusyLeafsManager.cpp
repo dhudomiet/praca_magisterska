@@ -53,6 +53,42 @@ void BusyLeafsManager::initializeIds(cell** cells){
 	}
 }
 
+void BusyLeafsManager::initializeSpace(int** space){
+	int sum = 0;
+	int step = HEIGHT/(CORES-1);
+	int sumWid = 0;
+	int t = TASKS;
+	int stepWid = WIDTH/((t>WIDTH)? WIDTH : t);
+	int i=0;
+	while(sum<HEIGHT){
+		if(sum<HEIGHT && (sum+step)>=HEIGHT){
+			step = HEIGHT-sum;
+		}
+		while(sumWid<WIDTH){
+			int params[4];
+			if(sumWid<WIDTH && (sumWid+stepWid)>=WIDTH){
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = WIDTH-sumWid;
+			}else{
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = stepWid;
+			}
+			InitializeSpace* wsk = new InitializeSpace(params,space);
+			BusyLeafs::getCore(i)->addTask(wsk);
+			sumWid+=stepWid;
+		}
+		sum+=step;
+		sumWid=0;
+		if(++i==BusyLeafs::getCoreSize()){
+			--i;
+		}
+	}
+}
+
 void BusyLeafsManager::calculateEnergy(cell** cells){
 	int sum = 0;
 	int step = HEIGHT/(CORES-1);
@@ -181,6 +217,39 @@ void BusyLeafsManager::copySpaces(cell** space, cell** source_space){
 	}
 }
 
+void BusyLeafsManager::copyGrows(int** space, int** source){
+	int sum = 0;
+	int step = HEIGHT/(CORES-1);
+	int sumWid = 0;
+	int t = TASKS;
+	int stepWid = WIDTH/((t>WIDTH)? WIDTH : t);
+	int i=0;
+	while(sum<HEIGHT){
+		if(sum<HEIGHT && (sum+step)>=HEIGHT){
+			step = HEIGHT-sum;
+		}
+		while(sumWid<WIDTH){
+			int params[4];
+			if(sumWid<WIDTH && (sumWid+stepWid)>=WIDTH){
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = WIDTH-sumWid;
+			}else{
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = stepWid;
+			}
+			CopyGrows* wsk = new CopyGrows(params,space, source);
+			BusyLeafs::addTask(wsk);
+			sumWid+=stepWid;
+		}
+		sum+=step;
+		sumWid=0;
+	}
+}
+
 void BusyLeafsManager::initializeEnergy(cell** cells){
 	int sum = 0;
 	int step = HEIGHT/(CORES-1);
@@ -272,5 +341,41 @@ void BusyLeafsManager::fillNoRectList(vector<cell> *list, cell** cells){
 		}
 		sum+=step;
 		sumWid=0;
+	}
+}
+
+void BusyLeafsManager::executeGrainGrow(int** space, int** old_space){
+	int sum = 0;
+	int step = HEIGHT/(CORES-1);
+	int sumWid = 0;
+	int t = TASKS;
+	int stepWid = WIDTH/((t>WIDTH)? WIDTH : t);
+	int i=0;
+	while(sum<HEIGHT){
+		if(sum<HEIGHT && (sum+step)>=HEIGHT){
+			step = HEIGHT-sum;
+		}
+		while(sumWid<WIDTH){
+			int params[4];
+			if(sumWid<WIDTH && (sumWid+stepWid)>=WIDTH){
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = WIDTH-sumWid;
+			}else{
+				params[0] = sum;
+				params[1] = step;
+				params[2] = sumWid;
+				params[3] = stepWid;
+			}
+			ExecuteGrainGrow* wsk = new ExecuteGrainGrow(params,space,old_space);
+			BusyLeafs::getCore(i)->addTask(wsk);
+			sumWid+=stepWid;
+		}
+		sum+=step;
+		sumWid=0;
+		if(++i==BusyLeafs::getCoreSize()){
+			--i;
+		}
 	}
 }

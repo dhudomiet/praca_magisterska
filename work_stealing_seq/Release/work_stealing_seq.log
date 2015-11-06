@@ -1,12 +1,12 @@
-﻿Build started 2015-09-16 00:25:41.
+﻿Build started 2015-10-06 23:07:31.
      1>Project "C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing_seq\work_stealing_seq.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MonteCarlo.cpp Recrystalization.cpp main.cpp
          MonteCarlo.cpp
      1>MonteCarlo.cpp(21): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>MonteCarlo.cpp(45): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>MonteCarlo.cpp(307): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>MonteCarlo.cpp(481): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>MonteCarlo.cpp(49): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>MonteCarlo.cpp(311): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>MonteCarlo.cpp(485): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
          Recrystalization.cpp
      1>Recrystalization.cpp(22): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
      1>Recrystalization.cpp(93): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
@@ -24,4 +24,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.93
+Time Elapsed 00:00:01.77

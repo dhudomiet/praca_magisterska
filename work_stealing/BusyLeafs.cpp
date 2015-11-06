@@ -24,12 +24,12 @@ boost::thread* BusyLeafs::start(){
 void BusyLeafs::tryPop(){
 	boost::unique_lock<boost::shared_mutex> lock(shr_mut);
 	if(tasksPool.size()>0){
-		cout<<"core id: "<<id<<" pop data from list"<<endl;
+		//cout<<"core id: "<<id<<" pop data from list"<<endl;
 		Task* t = tasksPool.at(0);
 		tasksPool.pop_front();
 		lock.unlock();
-		cout<<"core id: "<<id<<" ";
-		t->toString();
+		//cout<<"core id: "<<id<<" ";
+		//t->toString();
 		t->start();
 		t->join();
 	}

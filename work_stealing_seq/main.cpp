@@ -1,5 +1,6 @@
 #include "MonteCarlo.h"
 #include "Recrystalization.h"
+#include "GrainGrow.h"
 #include <stdio.h>
 #include <iostream>
 
@@ -7,10 +8,10 @@
 using namespace std;
 
 int main(){
-	//MonteCarlo mc;
-	//mc.monte_carlo_algorithm();
-	Recrystalization rec;
-	rec.recrystalization_algorithm();
+	//Recrystalization rec;
+	//rec.recrystalization_algorithm();
+	GrainGrow g;
+	g.grain_grow_algorithm();
 	system("pause");
 	return 0;
 
