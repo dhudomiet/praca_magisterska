@@ -15,11 +15,11 @@ CopySpaces::CopySpaces(int params[4], cell** source, cell** space) : Task(){
 
 CopySpaces::~CopySpaces(void)
 {
-	th->detach();
+	
 }
 
 void CopySpaces::start(){
-	th = new boost::thread(&CopySpaces::execute,this);
+	execute();
 }
 
 void CopySpaces::execute(){

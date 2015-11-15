@@ -8,15 +8,23 @@
 #include "MonteCarlo.h"
 
 MonteCarlo::MonteCarlo() {
-	//manager = new BusyLeafsManager();
 	manager = new WorkStealingManager();
 	initialize_ids();
 }
 
 MonteCarlo::~MonteCarlo(){
-	delete cells;
-	delete oldstate;
+	cout<<"destroy MOnteCarlo"<<endl;
+	for(int i=0;i<HEIGHT;i++){
+		delete [] cells[i];
+		delete [] oldstate[i];
+	}
+	
+	delete [] cells;
+	delete [] oldstate;
 	delete manager;
+	cout<<"end destroy MOnteCarlo"<<endl;
+	
+	
 }
 void MonteCarlo::initialize_ids() {
 	cells = new cell*[HEIGHT];
@@ -25,10 +33,10 @@ void MonteCarlo::initialize_ids() {
 		cells[i] = new cell[WIDTH];
 		oldstate[i] = new cell[WIDTH];
 	}
-	cout<<"start initialize ids..."<<endl;
+	cout<<"start initializeIds..."<<endl;
 	manager->initializeIds(cells);
 	manager->run();
-	cout<<"end initialize ids"<<endl;
+	cout<<"end initializeIds"<<endl;
 	//draw_space();
 	/*int sum = 0;
 	int step = HEIGHT/CORES;
@@ -91,15 +99,15 @@ void MonteCarlo::monte_carlo_algorithm() {
 	clock_t start,stop;
 	start=clock();
 	calculate_energy();
-	vector<cell> listCells;
-	copy_spaces(oldstate, cells);
+	concurrent_vector<cell*> listCells;
 	for (int i = 0; i < 100; i++) {
+		copy_spaces(oldstate, cells);
 		fill_list(&listCells, cells);
+		//cout<<listCells.size()<<endl;
 		if(listCells.size()>0){
 		executeList(&listCells,cells,oldstate);
-		listCells.clear();
-		copy_spaces(oldstate, cells);
 		}
+		listCells.clear();
 	}
 	stop=clock();
 	float time = (float)stop - (float)start;
@@ -108,7 +116,8 @@ void MonteCarlo::monte_carlo_algorithm() {
 
 }
 
-void MonteCarlo::executeList(vector<cell> *list, cell** cells, cell** oldstate){
+void MonteCarlo::executeList(concurrent_vector<cell*> *list, cell** cells, cell** oldstate){
+	
 	//cout<<"start execute list..."<<endl;
 	manager->executeList(list,cells,oldstate);
 	manager->run();
@@ -127,7 +136,7 @@ void MonteCarlo::executeList(vector<cell> *list, cell** cells, cell** oldstate){
 	group.join_all();*/
 }
 
-void MonteCarlo::fill_list(vector<cell> *vect, cell** space) {
+void MonteCarlo::fill_list(concurrent_vector<cell*> *vect, cell** space) {
 	//cout<<"start fill list..."<<endl;
 	manager->fillList(vect,space);
 	manager->run();

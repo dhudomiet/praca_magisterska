@@ -8,7 +8,6 @@ InitializeEnergy::InitializeEnergy(void) : Task()
 
 InitializeEnergy::~InitializeEnergy(void)
 {
-	th->detach();
 }
 
 InitializeEnergy::InitializeEnergy(int params[4], cell** cells) : Task(){
@@ -18,7 +17,6 @@ InitializeEnergy::InitializeEnergy(int params[4], cell** cells) : Task(){
 }
 	
 void InitializeEnergy::start(){
-	th = new boost::thread(&InitializeEnergy::execute,this);
 }
 
 void InitializeEnergy::execute(){

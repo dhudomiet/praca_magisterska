@@ -16,11 +16,11 @@ ExecuteGrainGrow::ExecuteGrainGrow(int params[4], int** space, int** old_space){
 
 ExecuteGrainGrow::~ExecuteGrainGrow(void)
 {
-	th->detach();
+	
 }
 
 void ExecuteGrainGrow::start(){
-	th = new boost::thread(&ExecuteGrainGrow::execute,this);
+
 }
 void ExecuteGrainGrow::execute(){
 	int end1 = params[0]+params[1];

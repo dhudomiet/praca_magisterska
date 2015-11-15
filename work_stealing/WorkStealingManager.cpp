@@ -12,10 +12,12 @@ WorkStealingManager::~WorkStealingManager(void)
 }
 
 void WorkStealingManager::run(){
+	//cout<<"run calculate..."<<endl;
 	for(int i=0;i<(CORES-1);i++){
 		group.add_thread(WorkStealing::getCore(i)->start());
 	}
 	group.join_all();
+	//cout<<"end run calculate..."<<endl;
 }
 
 void WorkStealingManager::initializeIds(cell** cells){
@@ -98,6 +100,7 @@ void WorkStealingManager::calculateEnergy(cell** cells){
 	int t = TASKS;
 	int stepWid = WIDTH/((t>WIDTH)? WIDTH : t);
 	int i=0;
+	//cout<<"prepare data to calculate energy..."<<endl;
 	while(sum<HEIGHT){
 		if(sum<HEIGHT && (sum+step)>=HEIGHT){
 			step = HEIGHT-sum;
@@ -126,9 +129,10 @@ void WorkStealingManager::calculateEnergy(cell** cells){
 			--i;
 		}
 	}
+	//cout<<"end prepare data to calculate energy..."<<endl;
 }
 
-void WorkStealingManager::executeList(vector<cell> *list, cell** cells, cell** oldstate){
+void WorkStealingManager::executeList(concurrent_vector<cell*> *list, cell** cells, cell** oldstate){
 	int sum = 0;
 	int step = list->size()/(CORES-1);
 	int sumWid = 0;
@@ -154,16 +158,17 @@ void WorkStealingManager::executeList(vector<cell> *list, cell** cells, cell** o
 		if(++i==WorkStealing::getCoreSize()){
 			--i;
 		}
-	}
+	}	
 }
 
-void WorkStealingManager::fillList(vector<cell> *vect, cell** space){
+void WorkStealingManager::fillList(concurrent_vector<cell*> *vect, cell** space){
 	int sum = 0;
 	int step = HEIGHT/(CORES-1);
 	int sumWid = 0;
 	int t = TASKS;
 	int stepWid = WIDTH/((t>WIDTH)? WIDTH : t);
 	int i=0;
+	
 	while(sum<HEIGHT){
 		if(sum<HEIGHT && (sum+step)>=HEIGHT){
 			step = HEIGHT-sum;

@@ -5,55 +5,22 @@
 #include "MonteCarlo.h"
 #include "Recrystalization.h"
 #include "GrainGrow.h"
+#include <thread>
 
 using namespace std;
-/*
-class ehe {
-public:
-	ehe(int l, vector<int> d) : latecy(l), data(d){
 
-	}
-	void doSomethink() {
-		for(int i=0;i<5;i++){
-			cout<<"watek id: "<<boost::this_thread::get_id()<<" robi cos..."<<endl;
-			mut.lock();
-			cout<<"watek id: "<<boost::this_thread::get_id()<<" blokuje funkcje..."<<endl;
-			boost::posix_time::seconds ms(latecy);
-			boost::this_thread::sleep(ms);
-			mut.unlock();
-			stealData();
+
+void doSomethink(/*int** tab, int beg1, int end1,int beg2,int end2*/) {
+	/*for(int i=beg1;i<end1;i++){
+		for(int j=beg2;j<end2;j++){
+		tab[i][j] = 1;
 		}
-	}
-	void start(){
-		th = boost::thread(&ehe::doSomethink,this);
-	}
-	void join(){
-		th.join();
-	}
-	int getData(){
-		mut.lock();
-		cout<<"kradziez danych..."<<endl;
-		int a = data.at(0);
-		data.erase(data.begin());
-		mut.unlock();
-		return a;
-	}
-	void stealData(){
-		//mut.lock();
-		if(data.size() > 0){
-			int a = watki->getData();
-			data.push_back(a);
-		}
-		//mut.unlock();
-	}
-	vector<int> data;
-	ehe* watki;
-private:
-	boost::thread th;
-	boost::mutex mut;
-	int latecy;
+	}*/
+	cout<<"hehe"<<endl;
+		
 	
-};*/
+}
+
 
 int main(){
 	/*vector<int> d1,d2;
@@ -69,11 +36,34 @@ int main(){
 	watek2.start();
 	watek2.join();*/
 	//MonteCarlo mc;
-	//mc.monte_carlo_algorithm();
+	/*int **tab = new int*[10];
+	for(int i=0;i<10;i++){
+		tab[i] = new int[10];
+	}
+	boost::thread_group group;
+	group.add_thread(new boost::thread(doSomethink,tab,0,5,0,5));
+	group.add_thread(new boost::thread(doSomethink,tab,0,5,5,10));
+	group.add_thread(new boost::thread(doSomethink,tab,5,10,0,5));
+	group.add_thread(new boost::thread(doSomethink,tab,5,10,5,10));
+	group.join_all();
+	cout<<"cipeczka"<<endl;
+	for(int i=0;i<10;i++){
+		for(int j=0;j<10;j++){
+			cout<<tab[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+	*/
+	//boost::thread_group group;
+	//thread th = thread(doSomethink);
+	//group.add_thread(&th);
+	MonteCarlo mc;
+	mc.monte_carlo_algorithm();
+	//mc.~MonteCarlo();
 	//Recrystalization rec;
 	//rec.recrystalization_algorithm();
-	Grain_grow g;
-	g.grain_grow_algorithm();
+	//Grain_grow g;
+	//g.grain_grow_algorithm();
 	
 	system("pause");
 	return 0;

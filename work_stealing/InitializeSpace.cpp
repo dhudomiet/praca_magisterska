@@ -8,7 +8,6 @@ InitializeSpace::InitializeSpace(void)
 
 InitializeSpace::~InitializeSpace(void)
 {
-	th->detach();
 }
 
 InitializeSpace::InitializeSpace(int params[4], int** space){
@@ -19,7 +18,6 @@ InitializeSpace::InitializeSpace(int params[4], int** space){
 }
 
 void InitializeSpace::start(){
-	th = new boost::thread(&InitializeSpace::execute,this);
 }
 
 void InitializeSpace::execute(){

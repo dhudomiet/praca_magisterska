@@ -15,11 +15,11 @@ CopyGrows::CopyGrows(int params[4], int** space, int** source){
 
 CopyGrows::~CopyGrows(void)
 {
-	th->detach();
+	
 }
 
 void CopyGrows::start(){
-	th = new boost::thread(&CopyGrows::execute,this);
+
 }
 
 void CopyGrows::execute(){

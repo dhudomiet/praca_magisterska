@@ -5,7 +5,7 @@ ExecuteList::ExecuteList(void) : Task()
 {
 }
 
-ExecuteList::ExecuteList(int begin,int end,vector<cell> *vect, cell** cells, cell** oldstate) : Task(){
+ExecuteList::ExecuteList(int begin,int end,concurrent_vector<cell*> *vect, cell** cells, cell** oldstate) : Task(){
 	this->begin = begin;
 	this->end = end;
 	this->vect = vect;
@@ -15,18 +15,18 @@ ExecuteList::ExecuteList(int begin,int end,vector<cell> *vect, cell** cells, cel
 
 ExecuteList::~ExecuteList(void)
 {
-	th->detach();
+	
 }
 
 void ExecuteList::start(){
-	th = new boost::thread(&ExecuteList::execute,this);
+
 }
 
 void ExecuteList::execute(){
 	//end = (end>vect->size())? vect->size() : end;
 	//cout<<begin<<"  "<<end<<endl;
 	for(int i=begin;i<end;i++){
-		cell data = vect->at(i);
+		cell data = *vect->at(i);
 		int tab[2];
 		int *p = tab;
 		cal_energy(data.idx_i, data.idx_j, p, oldstate);
@@ -41,7 +41,6 @@ void ExecuteList::execute(){
 }
 
 void ExecuteList::cal_energy(int idx_i, int idx_j,int * point, cell** space_of_cells) {
-	srand(time(NULL));
 	int *tab;
 	int k=0,i=0,j=0,endI=0,endJ=0;
 	if (idx_i == 0 && idx_j == 0) {
@@ -125,6 +124,7 @@ void ExecuteList::cal_energy(int idx_i, int idx_j,int * point, cell** space_of_c
 			}
 			point[0] = id;
 			point[1] = energy;
+			delete[] tab;
 			return;
 		}
 	}

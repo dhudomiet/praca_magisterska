@@ -26,8 +26,8 @@ public:
 	void initializeIds(cell** cells);
 	void initializeSpace(int** space);
 	void calculateEnergy(cell** cells);
-	void executeList(vector<cell> *list, cell** cells, cell** oldstate);
-	void fillList(vector<cell> *vect, cell** space);
+	void executeList(concurrent_vector<cell*> *list, cell** cells, cell** oldstate);
+	void fillList(concurrent_vector<cell*> *vect, cell** space);
 	void copySpaces(cell** space, cell** source_space);
 	void copyGrows(int** space, int** source);
 	void initializeEnergy(cell** cells);

@@ -41,7 +41,6 @@ private:
 	MonteCarlo mc;
 	vector<cell> recrystalizationList;
 	Manager* manager;
-	//BusyLeafsManager* manager;
 
 };
 

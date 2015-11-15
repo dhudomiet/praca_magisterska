@@ -16,8 +16,8 @@ public:
 	virtual void execute();
 	void detach();
 	virtual void toString();
+	//virtual void gather();
 protected:
-	boost::thread *th;
 };
 
 #endif

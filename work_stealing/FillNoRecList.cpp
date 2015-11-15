@@ -18,7 +18,6 @@ FillNoRecList::~FillNoRecList(void)
 }
 
 void FillNoRecList::start(){
-	th = new boost::thread(&FillNoRecList::execute,this);
 }
 
 void FillNoRecList::execute(){

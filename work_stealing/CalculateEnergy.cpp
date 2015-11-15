@@ -15,11 +15,11 @@ CalculateEnergy::CalculateEnergy(int params[4], cell** cells) : Task(){
 
 CalculateEnergy::~CalculateEnergy(void)
 {
-	th->detach();
+
 }
 
 void CalculateEnergy::start(){
-	th = new boost::thread(&CalculateEnergy::execute,this);
+	
 }
 
 void CalculateEnergy::execute(){

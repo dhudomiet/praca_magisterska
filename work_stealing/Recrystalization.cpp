@@ -8,7 +8,6 @@
 #include "Recrystalization.h"
 
 Recrystalization::Recrystalization() {
-	//manager = mc.getBusyLeafsManager();
 	manager = mc.getManager();
 	initializeSpace();
 }
@@ -63,10 +62,11 @@ void Recrystalization::initializeSpace() {
 		cells[i] = new cell[WIDTH];
 		oldstate[i] = new cell[WIDTH];
 	}
+	cout<<"start initializeSpace..."<<endl;
 	mc.monte_carlo_algorithm();
 	mc.set_cells(cells);
 	initializeEnergy();
-
+	cout<<"end initializeSpace"<<endl;
 }
 
 void Recrystalization::initializeEnergy() {
@@ -82,10 +82,10 @@ void Recrystalization::initializeEnergy() {
 		group.add_thread(WorkStealing::getCore(i)->start());
 	}
 	group.join_all();*/
-	cout<<"Recrystalization initialize energy..."<<endl;
+	cout<<"start initialize energy..."<<endl;
 	manager->initializeEnergy(cells);
 	manager->run();
-	cout<<"Recrystalization end initialize energy"<<endl;
+	cout<<"end initialize energy"<<endl;
 }
 
 void Recrystalization::executeRec(vector<cell> *noRect, vector<cell> *rect){
@@ -101,8 +101,10 @@ void Recrystalization::executeRec(vector<cell> *noRect, vector<cell> *rect){
 		group.add_thread(WorkStealing::getCore(i)->start());
 	}
 	group.join_all();*/
+	cout<<"start executeRec..."<<endl;
 	manager->executeRec(noRect,rect,cells,oldstate);
 	manager->run();
+	cout<<"end executeRec"<<endl;
 }
 
 void Recrystalization::fill_no_recrystalization_list(vector<cell> *list) {
@@ -119,8 +121,10 @@ void Recrystalization::fill_no_recrystalization_list(vector<cell> *list) {
 	}
 	group.join_all();*/
 	//cout<<"fill no rect grains..."<<endl;
+	cout<<"start fillNoRectList"<<endl;
 	manager->fillNoRectList(list,cells);
 	manager->run();
+	cout<<"end fillNoRectList"<<endl;
 	//cout<<"end fill no rect grains"<<endl;
 }
 

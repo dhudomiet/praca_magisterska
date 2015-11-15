@@ -123,7 +123,7 @@ void BusyLeafsManager::calculateEnergy(cell** cells){
 	}
 }
 
-void BusyLeafsManager::executeList(vector<cell> *list, cell** cells, cell** oldstate){
+void BusyLeafsManager::executeList(concurrent_vector<cell*> *list, cell** cells, cell** oldstate){
 	int sum = 0;
 	int step = list->size()/(CORES-1);
 	int sumWid = 0;
@@ -149,7 +149,7 @@ void BusyLeafsManager::executeList(vector<cell> *list, cell** cells, cell** olds
 	}
 }
 
-void BusyLeafsManager::fillList(vector<cell> *vect, cell** space){
+void BusyLeafsManager::fillList(concurrent_vector<cell*> *vect, cell** space){
 	int sum = 0;
 	int step = HEIGHT/(CORES-1);
 	int sumWid = 0;

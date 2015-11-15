@@ -1,15 +1,8 @@
-﻿Build started 2015-11-06 17:09:37.
+﻿Build started 2015-11-15 19:43:19.
      1>Project "C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\work_stealing\work_stealing.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\boost_1_58_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BusyLeafsManager.cpp CalculateEnergy.cpp CopySpaces.cpp ExecuteGrainGrow.cpp ExecuteList.cpp ExecuteRec.cpp FillList.cpp FillNoRecList.cpp GrainGrow.cpp InitializeEnergy.cpp InitializeIds.cpp InitializeSpace.cpp Manager.cpp MonteCarlo.cpp Recrystalization.cpp Task.cpp WorkStealing.cpp WorkStealingManager.cpp main.cpp
-         BusyLeafsManager.cpp
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(16): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(133): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(134): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(134): warning C4018: '>=' : signed/unsigned mismatch
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(294): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(295): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\ideapad\documents\visual studio 2012\projects\work_stealing\work_stealing\busyleafsmanager.cpp(295): warning C4018: '>=' : signed/unsigned mismatch
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\boost_1_58_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
      1>c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2761): warning C4996: 'std::_Fill_n': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2747) : see declaration of 'std::_Fill_n'
                  c:\boost_1_58_0\boost\random\detail\polynomial.hpp(114) : see reference to function template instantiation '_OutIt std::fill_n<boost::random::detail::polynomial_ops::digit_t*,size_t,boost::random::detail::polynomial_ops::digit_t>(_OutIt,_Diff,const _Ty &)' being compiled
@@ -19,26 +12,6 @@
                      _Diff=size_t,
                      _Ty=boost::random::detail::polynomial_ops::digit_t
                  ]
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         Task.cpp
-         main.cpp
-         WorkStealingManager.cpp
-         WorkStealing.cpp
-         Recrystalization.cpp
-         MonteCarlo.cpp
-         Manager.cpp
-         InitializeSpace.cpp
-         InitializeIds.cpp
-         InitializeEnergy.cpp
-         GrainGrow.cpp
-         FillNoRecList.cpp
-         FillList.cpp
-         ExecuteRec.cpp
-         ExecuteList.cpp
-         ExecuteGrainGrow.cpp
-         CopySpaces.cpp
-         CalculateEnergy.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\boost_1_58_0\stage\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ideapad\Documents\Visual Studio 2012\Projects\work_stealing\Debug\multiscape_modeling_work_stealing.lib" /MACHINE:X86 Debug\BusyLeafs.obj
          Debug\BusyLeafsManager.obj
@@ -67,4 +40,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.74
+Time Elapsed 00:00:05.07

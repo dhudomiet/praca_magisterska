@@ -16,11 +16,9 @@ ExecuteRec::ExecuteRec(int begin, int end,vector<cell> *noRect, vector<cell> *ve
 
 ExecuteRec::~ExecuteRec(void)
 {
-	th->detach();
 }
 
 void ExecuteRec::start(){
-	th = new boost::thread(&ExecuteRec::execute,this);
 }
 	
 void ExecuteRec::execute(){
