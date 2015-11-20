@@ -5,7 +5,7 @@ ExecuteList::ExecuteList(void) : Task()
 {
 }
 
-ExecuteList::ExecuteList(int begin,int end,concurrent_vector<cell*> *vect, cell** cells, cell** oldstate) : Task(){
+ExecuteList::ExecuteList(int begin,int end,std::vector<cell*> *vect, cell** cells, cell** oldstate) : Task(){
 	this->begin = begin;
 	this->end = end;
 	this->vect = vect;
@@ -135,5 +135,5 @@ void ExecuteList::cal_energy(int idx_i, int idx_j,int * point, cell** space_of_c
 }
 
 void ExecuteList::toString(){
-	cout<<"execute task ExecuteList..."<<endl;
+	std::cout<<"execute task ExecuteList..."<<std::endl;
 }

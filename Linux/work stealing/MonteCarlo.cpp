@@ -9,7 +9,8 @@
 
 MonteCarlo::MonteCarlo() {
 	manager = new WorkStealingManager();
-	initialize_ids();
+	duraction = 0;
+	initializeIds();
 }
 
 MonteCarlo::~MonteCarlo(){
@@ -26,7 +27,7 @@ MonteCarlo::~MonteCarlo(){
 	
 	
 }
-void MonteCarlo::initialize_ids() {
+void MonteCarlo::initializeIds() {
 	cells = new cell*[HEIGHT];
 	oldstate = new cell*[HEIGHT];
 	for(int i=0;i<HEIGHT;i++){
@@ -63,7 +64,7 @@ void MonteCarlo::initialize_ids() {
 	//draw_space();*/
 }
 
-void MonteCarlo::calculate_energy() {
+void MonteCarlo::calculateEnergy() {
 	cout<<"start calculate energy..."<<endl;
 	manager->calculateEnergy(cells);
 	manager->run();
@@ -94,29 +95,29 @@ void MonteCarlo::initializeCores(){
 
 
 
-void MonteCarlo::monte_carlo_algorithm() {
+void MonteCarlo::monteCarloAlgorithm() {
 	logg("start monteCarlo algorithm...");
-	clock_t start,stop;
-	start=clock();
-	calculate_energy();
-	concurrent_vector<cell*> listCells;
+	std::chrono::steady_clock::time_point st = std::chrono::steady_clock::now();
+	calculateEnergy();
+	vector<cell*> listCells;
 	for (int i = 0; i < 100; i++) {
-		copy_spaces(oldstate, cells);
-		fill_list(&listCells, cells);
+		copySpaces(oldstate, cells);
+		fillList(&listCells, cells);
 		//cout<<listCells.size()<<endl;
 		if(listCells.size()>0){
 		executeList(&listCells,cells,oldstate);
 		}
 		listCells.clear();
 	}
-	stop=clock();
-	float time = (float)stop - (float)start;
-	loggTime("time execution montecarlo algorithm: ",time);
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+	duraction = std::chrono::duration_cast<std::chrono::milliseconds>(end - st).count();
+	loggTime("time execution montecarlo algorithm: ",duraction);
+	saveToFile();
 	//draw_space();
 
 }
 
-void MonteCarlo::executeList(concurrent_vector<cell*> *list, cell** cells, cell** oldstate){
+void MonteCarlo::executeList(std::vector<cell*> *list, cell** cells, cell** oldstate){
 	
 	//cout<<"start execute list..."<<endl;
 	manager->executeList(list,cells,oldstate);
@@ -136,7 +137,7 @@ void MonteCarlo::executeList(concurrent_vector<cell*> *list, cell** cells, cell*
 	group.join_all();*/
 }
 
-void MonteCarlo::fill_list(concurrent_vector<cell*> *vect, cell** space) {
+void MonteCarlo::fillList(std::vector<cell*> *vect, cell** space) {
 	//cout<<"start fill list..."<<endl;
 	manager->fillList(vect,space);
 	manager->run();
@@ -155,7 +156,7 @@ void MonteCarlo::fill_list(concurrent_vector<cell*> *vect, cell** space) {
 	group.join_all();*/
 }
 
-void MonteCarlo::copy_spaces(cell** space, cell** source_space) {
+void MonteCarlo::copySpaces(cell** space, cell** source_space) {
 	//cout<<"start copy spaces..."<<endl;
 	manager->copySpaces(space,source_space);
 	manager->run();
@@ -174,7 +175,7 @@ void MonteCarlo::copy_spaces(cell** space, cell** source_space) {
 	group.join_all();*/
 }
 
-void MonteCarlo::draw_energy() {
+void MonteCarlo::drawEnergy() {
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
 			std::cout << cells[i][j].energy << " ";
@@ -183,7 +184,7 @@ void MonteCarlo::draw_energy() {
 	}
 }
 
-void MonteCarlo::draw_space() {
+void MonteCarlo::drawSpace() {
 	for (int i = 0; i < HEIGHT; i++) {
 		for(int j=0;j<WIDTH;j++){
 			cout<<cells[i][j].id<<" ";
@@ -198,7 +199,7 @@ void MonteCarlo::clean(vector<cell> *vect){
 	}
 }
 
-void MonteCarlo::set_cells(cell** cells){
+void MonteCarlo::setCells(cell** cells){
 	for(int i=0;i<HEIGHT;i++){
 		for(int j=0;j<WIDTH;j++){
 			cells[i][j].id = this->cells[i][j].id;
@@ -212,3 +213,21 @@ void MonteCarlo::set_cells(cell** cells){
 Manager* MonteCarlo::getManager(){
 	return manager;
 }
+
+void MonteCarlo::saveToFile(){
+	std::ofstream file;
+	file.open("results.txt",ios::out);
+	if(file.good()){
+		file<<"----------------------------------------------------------------------\n";
+		file<<"									RESULTS								 \n";
+		file<<"----------------------------------------------------------------------\n";
+		file<<"Monte Carlo algorithm: space: HEIGHTxWIDTH "<<HEIGHT<<"x"<<WIDTH<<"\n";
+		file<<"number of ids on the start: "<<NUMBER_OF_IDS<<"\n";
+		file<<"number of cores: "<<CORES<<"\n";
+		int t = TASKS;
+		file<<"number of tasks: "<<t<<"\n";
+		file<<"time of execution algorithm: "<<duraction<<"\n";
+		file.close();
+	}
+}
+

@@ -1,10 +1,10 @@
 #ifndef CONSTANS_H_
 #define CONSTANS_H_
 
-#define HEIGHT 500
-#define WIDTH 500
-#define NUMBER_OF_IDS 500
-#define NUMBER_OF_GRAINS 500
+#define HEIGHT 1000
+#define WIDTH 1000
+#define NUMBER_OF_IDS 900
+#define NUMBER_OF_GRAINS 900
 #define H 4
 #define ENERGY_ON_THE_BOARD 2
 #define ENERGY_ON_GRAIN 7
@@ -14,7 +14,7 @@
 #define loggErr(a,b) if(FLAG == true)std::cout<<a<<" error nr: "<<b<<std::endl;
 #define loggTime(a,b) if(FLAG ==true)std::cout<<a<<" "<<b<<std::endl;
 #define CORES boost::thread::hardware_concurrency()
-#define TASKS 50; //number of tasks for one core to execution
+#define TASKS 100; //number of tasks for one core to execution
 typedef struct {
 	int id;
 	int idx_i;

@@ -4,14 +4,12 @@
 
 #include "Task.h"
 #include "constans.h"
-#include <concurrent_vector.h>
-
-using namespace concurrency;
+#include <vector>
 class ExecuteList : public Task
 {
 public:
 	ExecuteList(void);
-	ExecuteList(int begin,int end,concurrent_vector<cell*> *vect, cell** cells, cell** oldstate);
+	ExecuteList(int begin,int end,std::vector<cell*> *vect, cell** cells, cell** oldstate);
 	~ExecuteList(void);
 	void start();
 	void execute();
@@ -19,7 +17,7 @@ public:
 	void toString();
 private:
 	int begin,end;
-	concurrent_vector<cell*> *vect;
+	std::vector<cell*> *vect;
 	cell** cells;
 	cell** oldstate;
 };

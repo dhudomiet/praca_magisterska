@@ -26,8 +26,8 @@ private:
 	cell** cells;
 	//ENG engine;
 	//UDIST dist;
-	uniform_int_distribution<int> dice_distribution;
-	mt19937 random_number_engine;
+	std::uniform_int_distribution<int> dice_distribution;
+	std::mt19937 random_number_engine;
 	//UGEN generator;
 	static int num;
 	

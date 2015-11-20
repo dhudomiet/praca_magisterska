@@ -4,6 +4,8 @@
 
 #include "Task.h"
 #include "constans.h"
+#include <boost/thread.hpp>
+#include <vector>
 
 class ExecuteRec : public Task
 {
@@ -22,6 +24,7 @@ private:
 	cell** oldstate;
 	vector<cell> *vect;
 	vector<cell> *noRect;
+	static boost::mutex mut;
 };
 
 #endif
