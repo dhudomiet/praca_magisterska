@@ -13,13 +13,14 @@
 #include <string>
 #include <stdlib.h>
 #include <fstream>
-#include <iomanip>
-#include <ctime>
-#include <chrono>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include "constans.h"
 #include "WorkStealingManager.h"
 #include "BusyLeafsManager.h"
 #include "Manager.h"
+
+typedef boost::posix_time::ptime Time;
+typedef boost::posix_time::time_duration TimeDuraction;
 
 class MonteCarlo {
 public:

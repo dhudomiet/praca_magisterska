@@ -57,13 +57,13 @@ int main(){
 	//boost::thread_group group;
 	//thread th = thread(doSomethink);
 	//group.add_thread(&th);
-	//MonteCarlo mc;
-	//mc.monte_carlo_algorithm();
+	MonteCarlo mc;
+	mc.monteCarloAlgorithm();
 	//mc.~MonteCarlo();
-	Recrystalization rec;
-	rec.recrystalization_algorithm();
+	//Recrystalization rec;
+	//rec.recrystalization_algorithm();
 	//Grain_grow g;
-	//g.grain_grow_algorithm();
+	//g.grainGrowAlgorithm();
 	return 0;
 
 

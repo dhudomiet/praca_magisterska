@@ -10,8 +10,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <stdlib.h>
 #include <time.h>
+#include <stdlib.h>
 #include <fstream>
 #include "MonteCarlo.h"
 #include "InitializeEnergy.h"

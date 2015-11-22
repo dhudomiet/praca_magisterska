@@ -38,7 +38,7 @@ void MonteCarlo::initializeIds() {
 	manager->initializeIds(cells);
 	manager->run();
 	cout<<"end initializeIds"<<endl;
-	//draw_space();
+	drawSpace();
 	/*int sum = 0;
 	int step = HEIGHT/CORES;
 	clock_t start,stop;
@@ -97,7 +97,7 @@ void MonteCarlo::initializeCores(){
 
 void MonteCarlo::monteCarloAlgorithm() {
 	logg("start monteCarlo algorithm...");
-	std::chrono::steady_clock::time_point st = std::chrono::steady_clock::now();
+	Time st(boost::posix_time::microsec_clock::local_time());
 	calculateEnergy();
 	vector<cell*> listCells;
 	for (int i = 0; i < 100; i++) {
@@ -109,11 +109,12 @@ void MonteCarlo::monteCarloAlgorithm() {
 		}
 		listCells.clear();
 	}
-	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-	duraction = std::chrono::duration_cast<std::chrono::milliseconds>(end - st).count();
+	Time end(boost::posix_time::microsec_clock::local_time());
+	TimeDuraction d = end - st;
+	duraction = d.total_milliseconds();
 	loggTime("time execution montecarlo algorithm: ",duraction);
 	saveToFile();
-	//draw_space();
+	//drawSpace();
 
 }
 

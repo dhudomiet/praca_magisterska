@@ -8,7 +8,8 @@
 #include "GrainGrow.h"
 
 Grain_grow::Grain_grow() {
-	manager = new BusyLeafsManager();
+	manager = new WorkStealingManager();
+	duraction = 0;
 	initialize_space();
 }
 
@@ -26,20 +27,31 @@ void Grain_grow::initialize_space() {
 	manager->initializeSpace(space_of_cells);
 	manager->run();
 	int m = 1;
-	for (int i = 0; i < HEIGHT; i+=5) {
-		for(int j = 0; j < WIDTH; j+=5){
+	int divideWid = 0;
+		if(WIDTH>NUMBER_OF_GRAINS){
+			divideWid = WIDTH/NUMBER_OF_GRAINS;
+	}else{
+		divideWid = NUMBER_OF_GRAINS/WIDTH;
+	}
+	cout<<"set grains..."<<endl;
+	for (int i = 0; i < HEIGHT; i+=NUMBER_OF_GRAINS/(NUMBER_OF_GRAINS/2)) {
+		for(int j = 0; j < WIDTH; j+=divideWid){
 			space_of_cells[i][j] = (m++);
+			if(m>NUMBER_OF_GRAINS){
+				break;
+			}
 		}
 	}
+	cout<<"end set grains..."<<endl;
 	//draw_space();
 }
 
-void Grain_grow::copy_spaces(int** space, int** source_space) {
+void Grain_grow::copySpaces(int** space, int** source_space) {
 	manager->copyGrows(space,source_space);
 	manager->run();
 }
 
-void Grain_grow::draw_space() {
+void Grain_grow::drawSpace() {
 	cout<<endl;
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
@@ -49,17 +61,18 @@ void Grain_grow::draw_space() {
 	}
 }
 
-void Grain_grow::grain_grow_algorithm() {
+void Grain_grow::grainGrowAlgorithm() {
 	cout<<"start execute grain grow..."<<endl;
-	clock_t start, stop;
-	start = clock();
-	while (!is_fill_all()) {
-		copy_spaces(old_space, space_of_cells);
+	Time st(boost::posix_time::microsec_clock::local_time());
+	while (!isFillAll()) {
+		copySpaces(old_space, space_of_cells);
 		executeGrainGrow(space_of_cells,old_space);
 	}
-	stop = clock();
-	float time = (float)stop - (float)start;
-	cout<<"time of execution : "<<time<<endl;
+	Time end(boost::posix_time::microsec_clock::local_time());
+	TimeDuraction d = end - st;
+	duraction = d.total_milliseconds();
+	cout<<"time of execution : "<<duraction<<endl;
+	saveToFile();
 	//draw_space();
 
 }
@@ -69,7 +82,7 @@ void Grain_grow::executeGrainGrow(int** space, int** old_space){
 	manager->run();
 }
 
-bool Grain_grow::is_fill_all(){
+bool Grain_grow::isFillAll(){
 	int count = 0;
 	for(int i=0;i<HEIGHT;i++){
 		for(int j=0;j<WIDTH;j++){
@@ -82,6 +95,23 @@ bool Grain_grow::is_fill_all(){
 		return true;
 	}else{
 		return false;
+	}
+}
+
+void Grain_grow::saveToFile(){
+	std::ofstream file;
+	file.open("results.txt",ios::out);
+	if(file.good()){
+		file<<"----------------------------------------------------------------------\n";
+		file<<"									RESULTS								 \n";
+		file<<"----------------------------------------------------------------------\n";
+		file<<"Grain Grow algorithm: space: HEIGHTxWIDTH "<<HEIGHT<<"x"<<WIDTH<<"\n";
+		file<<"number of grains: "<<NUMBER_OF_GRAINS<<"\n";
+		file<<"number of cores: "<<CORES<<"\n";
+		int t = TASKS;
+		file<<"number of tasks: "<<t<<"\n";
+		file<<"time of execution algorithm: "<<duraction<<"\n";
+		file.close();
 	}
 }
 

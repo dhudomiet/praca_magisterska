@@ -1,15 +1,8 @@
 ----------------------------------------------------------------------
 									RESULTS								 
 ----------------------------------------------------------------------
-Monte Carlo algorithm: space: HEIGHTxWIDTH 1000x1000
-number of ids on the start: 900
+Monte Carlo algorithm: space: HEIGHTxWIDTH 10x10
+number of ids on the start: 10
 number of cores: 4
 number of tasks: 100
-time of execution algorithm: 37887
-
-
-Recrystalization algorithm: space HeightxWidth: 1000x1000
-number of recrystalization grains on the start: 900
-number of cores: 4
-number of tasks: 100
-time of execution algorithm: 73862
+time of execution algorithm: 367
