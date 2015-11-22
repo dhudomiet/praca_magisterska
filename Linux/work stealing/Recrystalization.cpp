@@ -20,7 +20,7 @@ Recrystalization::~Recrystalization() {
 void Recrystalization::recrystalization_algorithm() {
 	std::vector<cell> noRecrystalizationCells;
 	cout << "start of recrystalization algorithm..." << endl;
-	std::chrono::steady_clock::time_point st = std::chrono::steady_clock::now();
+	Time st(boost::posix_time::microsec_clock::local_time());
 	randomRecGrains();
 	mc.copySpaces(oldstate, cells);
 	fill_no_recrystalization_list(&noRecrystalizationCells);
@@ -31,9 +31,9 @@ void Recrystalization::recrystalization_algorithm() {
 		fill_no_recrystalization_list(&noRecrystalizationCells);
 
 	}
-	std::chrono::steady_clock::time_point end =
-			std::chrono::steady_clock::now();
-	duraction = std::chrono::duration_cast < std::chrono::milliseconds> (end - st).count();
+	Time end(boost::posix_time::microsec_clock::local_time());
+	TimeDuraction d = end - st;
+	duraction = d.total_milliseconds();
 	loggTime("time of execution recrystalization: ", duraction);
 	saveToFile();
 	//draw_data();
