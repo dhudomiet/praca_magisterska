@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "constans.h"
-#include <boost\thread.hpp>
+#include <boost/thread.hpp>
 #include "MonteCarlo.h"
 #include "Recrystalization.h"
 #include "GrainGrow.h"
@@ -58,14 +58,12 @@ int main(){
 	//thread th = thread(doSomethink);
 	//group.add_thread(&th);
 	MonteCarlo mc;
-	mc.monte_carlo_algorithm();
+	mc.monteCarloAlgorithm();
 	//mc.~MonteCarlo();
 	//Recrystalization rec;
 	//rec.recrystalization_algorithm();
 	//Grain_grow g;
-	//g.grain_grow_algorithm();
-	
-	system("pause");
+	//g.grainGrowAlgorithm();
 	return 0;
 
 

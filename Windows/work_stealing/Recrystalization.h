@@ -7,18 +7,16 @@
 
 #ifndef RECRYSTALIZATION_H_
 #define RECRYSTALIZATION_H_
-#include <ppl.h>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <stdlib.h>
 #include <time.h>
+#include <stdlib.h>
+#include <fstream>
 #include "MonteCarlo.h"
 #include "InitializeEnergy.h"
 #include "FillNoRecList.h"
 #include "ExecuteRec.h"
-
-using namespace concurrency;
 
 class Recrystalization {
 public:
@@ -35,12 +33,14 @@ public:
 	void draw_data();
 	void draw_energy();
 	void clean(vector<cell> *vect);
+	void saveToFile();
 private:
 	cell** cells;
 	cell** oldstate;
 	MonteCarlo mc;
 	vector<cell> recrystalizationList;
 	Manager* manager;
+	long duraction;
 
 };
 

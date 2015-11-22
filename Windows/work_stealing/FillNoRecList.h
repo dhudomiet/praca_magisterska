@@ -4,6 +4,8 @@
 
 #include "Task.h"
 #include "constans.h"
+#include <vector>
+#include <boost/thread.hpp>
 
 class FillNoRecList : public Task
 {

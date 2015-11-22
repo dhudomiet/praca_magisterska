@@ -58,6 +58,9 @@
     <ClCompile Include="WorkStealing.cpp" />
     <ClCompile Include="WorkStealingManager.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="results.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6A210052-6EA2-4DAD-AF69-802AEACBBDD8}</ProjectGuid>
     <RootNamespace>work_stealing</RootNamespace>

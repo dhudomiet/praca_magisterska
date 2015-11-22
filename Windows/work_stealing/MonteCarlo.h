@@ -12,33 +12,39 @@
 #include <vector>
 #include <string>
 #include <stdlib.h>
-#include <time.h>
+#include <fstream>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include "constans.h"
 #include "WorkStealingManager.h"
 #include "BusyLeafsManager.h"
 #include "Manager.h"
 
+typedef boost::posix_time::ptime Time;
+typedef boost::posix_time::time_duration TimeDuraction;
+
 class MonteCarlo {
 public:
 	MonteCarlo();
 	~MonteCarlo();
-	void initialize_ids();
-	void draw_space();
-	void cal_energy(int idx_i, int idx_j,int * point, cell** space_of_cells);
-	void monte_carlo_algorithm();
-	void fill_list(concurrent_vector<cell*> *vect, cell** space);
-	void executeList(concurrent_vector<cell*> *list, cell** cells, cell** oldstate);
-	void copy_spaces(cell** space, cell** source_space);
-	void calculate_energy();
-	void draw_energy();
+	void initializeIds();
+	void drawSpace();
+	void calEnergy(int idx_i, int idx_j,int * point, cell** space_of_cells);
+	void monteCarloAlgorithm();
+	void fillList(vector<cell*> *vect, cell** space);
+	void executeList(vector<cell*> *list, cell** cells, cell** oldstate);
+	void copySpaces(cell** space, cell** source_space);
+	void calculateEnergy();
+	void drawEnergy();
 	void initializeCores();
-	void set_cells(cell** cells);
+	void setCells(cell** cells);
 	void clean(vector<cell> *vect);
+	void saveToFile();
 	Manager* getManager();
 	cell** cells;
 	cell** oldstate;
 private:
 	Manager* manager;
+	long duraction;
 };
 
 #endif

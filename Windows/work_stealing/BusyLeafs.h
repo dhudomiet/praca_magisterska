@@ -4,6 +4,7 @@
 #include "Task.h"
 #include <deque>
 #include <vector>
+#include <boost/thread.hpp>
 class BusyLeafs
 {
 public:

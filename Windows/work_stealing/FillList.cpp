@@ -1,11 +1,12 @@
 #include "FillList.h"
 
+boost::mutex FillList::mut;
 
 FillList::FillList(void) : Task()
 {
 }
 
-FillList::FillList(int params[4], concurrent_vector<cell*> *vect, cell** cells) : Task(){
+FillList::FillList(int params[4], std::vector<cell*> *vect, cell** cells) : Task(){
 	for(int i=0;i<4;i++){
 		this->params[i] = params[i];
 	}
@@ -28,7 +29,9 @@ void FillList::execute(){
 	for(int i=params[0];i<end1;i++){
 		for(int j=params[2];j<end2;j++){
 			if(is_on_the_board(i,j,cells)){
+				boost::unique_lock<boost::mutex> lock(mut);
 				vect->push_back(&cells[i][j]);
+				lock.unlock();
 			}
 		}
 	}
@@ -110,5 +113,5 @@ bool FillList::is_on_the_board(int idx_i, int idx_j, cell** space_of_cells) {
 }
 
 void FillList::toString(){
-	cout<<"execute task FillList..."<<endl;
+	std::cout<<"execute task FillList..."<<std::endl;
 }

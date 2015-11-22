@@ -4,14 +4,14 @@
 
 #include "Task.h"
 #include "constans.h"
-#include <concurrent_vector.h>
-using namespace concurrency;
+#include <vector>
+#include <boost/thread.hpp>
 
 class FillList : public Task
 {
 public:
 	FillList(void);
-	FillList(int params[4], concurrent_vector<cell*> *vect, cell** cells);
+	FillList(int params[4], vector<cell*> *vect, cell** cells);
 	~FillList(void);
 	void start();
 	void execute();
@@ -19,8 +19,9 @@ public:
 	void toString();
 private:
 	int params[4];
-	concurrent_vector<cell*> *vect;
+	vector<cell*> *vect;
 	cell** cells;
+	static boost::mutex mut;
 };
 
 #endif
