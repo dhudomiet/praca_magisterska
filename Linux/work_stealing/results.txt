@@ -1,0 +1,8 @@
+----------------------------------------------------------------------
+									RESULTS								 
+----------------------------------------------------------------------
+Grain Grow algorithm: space: HEIGHTxWIDTH 1000x1000
+number of grains: 9
+number of cores: 4
+number of tasks: 100
+time of execution algorithm: 0

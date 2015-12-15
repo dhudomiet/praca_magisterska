@@ -1,8 +1,0 @@
-----------------------------------------------------------------------
-									RESULTS								 
-----------------------------------------------------------------------
-Monte Carlo algorithm: space: HEIGHTxWIDTH 10x10
-number of ids on the start: 10
-number of cores: 4
-number of tasks: 100
-time of execution algorithm: 367
